@@ -70,7 +70,7 @@ $ cd ../..
 ```
 
 
-# Start Server
+## Start Server
 
 ```
 $ cd ./python-gavel-owl/src/gavel_owl
@@ -79,14 +79,14 @@ $ cd ../../..
 ```
 
 
-# Execute Translation
+## Execute Translation
 
 ```
 $ python3 -m gavel translate owl tptp ./lkif-core/lkif-core.owl > ./lkif-core.ax
 ```
 
 
-# Stop Server
+## Stop Server
 
 ```
 $ cd ./python-gavel-owl/src/gavel_owl
@@ -94,7 +94,7 @@ $ python3 -c 'from cli import stop_server; stop_server()'
 ```
 
 
-# Optional: Shorten Axiom Names
+## Optional: Shorten Axiom Names
 
 Replace all occurrences of 'http___www_estrellaproject_org_' in the generated lkif-core.ax with an empty string in order to shorten the axiom names.
 
