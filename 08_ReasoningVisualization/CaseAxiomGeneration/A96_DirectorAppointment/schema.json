@@ -1,0 +1,215 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "title": "LLC_DirectorAppointment",
+  "type": "object",
+  "properties": {
+    "company": {
+      "type": "object",
+      "properties": {
+        "shareholders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/shareholder"
+          }
+        },
+        "directors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/director"
+          }
+        },
+        "representationpower": {
+          "$ref": "#/$defs/representationpower"
+        },
+        "majorityrequirement": {
+          "$ref": "#/$defs/between_zero_and_one"
+        }
+      },
+      "required": [
+        "shareholders",
+        "directors"
+      ],
+      "additionalProperties": false
+    },
+    "resolution": {
+      "type": "object",
+      "properties": {
+        "new_director": {
+          "$ref": "#/$defs/director"
+        },
+        "meeting": {
+          "$ref": "#/$defs/meeting"
+        },
+        "voting": {
+          "$ref": "#/$defs/voting"
+        },
+        "written_consents": {
+          "$ref": "#/$defs/shareholders_references"
+        },
+        "consents_to_voting_in_writing": {
+          "$ref": "#/$defs/shareholders_references"
+        }
+      },
+      "required": [
+        "new_director",
+        "meeting",
+        "voting"
+      ],
+      "additionalProperties": false
+    },
+    "application": {
+      "type": "object",
+      "properties": {
+        "assurance_signed": {
+          "type": "boolean"
+        },
+        "deed_format": {
+          "$ref": "#/$defs/deed_format"
+        },
+        "applicants": {
+          "$ref": "#/$defs/directors_references"
+        }
+      },
+      "required": [
+        "assurance_signed",
+        "deed_format",
+        "applicants"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "company",
+    "resolution",
+    "application"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "shareholder": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "votes"
+      ],
+      "additionalProperties": false
+    },
+    "director": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "representationpower": {
+          "$ref": "#/$defs/representationpower"
+        },
+        "exemption181": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "representationpower": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "",
+        "sole",
+        "modified",
+        "joint"
+      ]
+    },
+    "meeting": {
+      "type": "object",
+      "properties": {
+        "occurred": {
+          "type": "boolean"
+        },
+        "format": {
+          "$ref": "#/$defs/meeting_format"
+        },
+        "consents_to_teleconference": {
+          "$ref": "#/$defs/shareholders_references"
+        }
+      },
+      "required": [
+        "occurred"
+      ],
+      "additionalProperties": false
+    },
+    "voting": {
+      "type": "object",
+      "properties": {
+        "yes_votes": {
+          "type": "integer"
+        },
+        "no_votes": {
+          "type": "integer"
+        },
+        "abstentions": {
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "meeting_format": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "",
+        "personal",
+        "teleconference"
+      ]
+    },
+    "deed_format": {
+      "type": "string",
+      "enum": [
+        "original",
+        "certifiedcopy"
+      ]
+    },
+    "shareholders_references": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "directors_references": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "between_zero_and_one": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}

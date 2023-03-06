@@ -1,0 +1,233 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "title": "LLC_CompanyDissolution",
+  "type": "object",
+  "properties": {
+    "company": {
+      "type": "object",
+      "properties": {
+        "shareholders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/shareholder"
+          }
+        },
+        "directors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/director"
+          }
+        },
+        "representationpower": {
+          "$ref": "#/$defs/representationpower"
+        },
+        "has_expiration_date": {
+          "type": "boolean"
+        },
+        "liquidators": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/director"
+          }
+        }
+      },
+      "required": [
+        "shareholders",
+        "directors",
+        "has_expiration_date"
+      ],
+      "additionalProperties": false
+    },
+    "resolution": {
+      "type": "object",
+      "properties": {
+        "liquidators": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/director"
+          }
+        },
+        "meeting": {
+          "$ref": "#/$defs/meeting"
+        },
+        "voting": {
+          "$ref": "#/$defs/voting"
+        },
+        "written_consents": {
+          "$ref": "#/$defs/shareholders_references"
+        },
+        "consents_to_voting_in_writing": {
+          "$ref": "#/$defs/shareholders_references"
+        },
+        "notarized": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "meeting",
+        "notarized"
+      ],
+      "additionalProperties": false
+    },
+    "application": {
+      "type": "object",
+      "properties": {
+        "assurance_signers": {
+          "$ref": "#/$defs/liquidators_references"
+        },
+        "deed_format": {
+          "$ref": "#/$defs/deed_format"
+        },
+        "applicants": {
+          "$ref": "#/$defs/liquidators_references"
+        }
+      },
+      "required": [
+        "assurance_signers",
+        "deed_format",
+        "applicants"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "company",
+    "resolution",
+    "application"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "shareholder": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "votes"
+      ],
+      "additionalProperties": false
+    },
+    "director": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "representationpower": {
+          "$ref": "#/$defs/representationpower"
+        },
+        "exemption181": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "representationpower": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "",
+        "sole",
+        "modified",
+        "joint"
+      ]
+    },
+    "meeting": {
+      "type": "object",
+      "properties": {
+        "occurred": {
+          "type": "boolean"
+        },
+        "format": {
+          "$ref": "#/$defs/meeting_format"
+        },
+        "consents_to_teleconference": {
+          "$ref": "#/$defs/shareholders_references"
+        }
+      },
+      "required": [
+        "occurred"
+      ],
+      "additionalProperties": false
+    },
+    "voting": {
+      "type": "object",
+      "properties": {
+        "yes_votes": {
+          "type": "integer"
+        },
+        "no_votes": {
+          "type": "integer"
+        },
+        "abstentions": {
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "meeting_format": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "",
+        "personal",
+        "teleconference"
+      ]
+    },
+    "deed_format": {
+      "type": "string",
+      "enum": [
+        "original",
+        "certifiedcopy"
+      ]
+    },
+    "shareholders_references": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "liquidators_references": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "between_zero_and_one": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}
