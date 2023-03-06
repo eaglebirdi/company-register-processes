@@ -1,0 +1,48 @@
+Is the application of the capital increase legal? (§ 54 I 1, § 57 I Hs. 1)
+ 1. The amended AoA fulltext is attached. (§ 54 I 2 Hs. 1)
+ 2. Match of old AoA, amendments, and resolution are notarially certified. (§ 54 I 2 Hs. 2)
+ 3. The capital increase resolution is legal. (§ 55 I 1 Hs. 1, § 53 I, § 3 I Nr. 3)
+   3.1. The resolution is formally legal.
+     case 3.1.1. The resolution is made in a meeting. (§ 48 I)
+       case 3.1.1.1. The meeting is personal. (§ 48 I 1)
+       case 3.1.1.2. The meeting is a teleconference and all shareholders agree with this format. (§ 48 I 2)
+     case 3.1.2. There is no meeting. (§ 48 II)
+       case 3.1.2.1. All shareholders consent to the determination in writing (§ 48 II Var. 2)
+       case 3.1.2.2. All shareholders agree with a voting in writing (§ 48 II Var. 2)
+   3.2. The resolution fulfills the material prerequisites.
+     3.2.1. The resolution is made with a qualified majority vote (three quarters). (§ 53 II 1 Hs. 2)
+       case 3.2.1.1. Three quarters of the votes are yes. (§ 47 I, § 53 II 1 Hs. 2)
+       case 3.2.1.2. All shareholders consent to the determination in writing. (§ 48 II Var. 1)
+     3.2.2. The resolution satisfies additional AoA requirements. (§ 53 II 2)
+   3.3. The resolution is notarized. (§ 53 II 1 Hs. 1)
+ 4. The requirements concerning a permit resolution (if necessary) are fulfilled. (§ 55 II 1)
+   case 4.1. There are no newly joining shareholders.
+   case 4.2. There are newly joining shareholders.
+     4.2.1. All newly joining shareholders are mentioned in a resolution. (§ 55 II 1)
+     4.2.2. The resolution is legal. (§ 55 II 1)
+       4.2.2.1. The resolution is formally legal.
+         case 4.2.2.1.1. The resolution is made in a meeting. (§ 48 I)
+           case 4.2.2.1.1.1. The meeting is personal. (§ 48 I 1)
+           case 4.2.2.1.1.2. The meeting is a teleconference and all shareholders agree with this format. (§ 48 I 2)
+         case 4.2.2.1.2. There is no meeting. (§ 48 II)
+           case 4.2.2.1.2.1. All shareholders consent to the determination in writing (§ 48 II Var. 2)
+           case 4.2.2.1.2.2. All shareholders agree with a voting in writing (§ 48 II Var. 2)
+   4.2.2.2. The resolution is made with a majority vote. (§ 47 I)
+     case 4.2.2.2.1. There is no special AoA majority requirement.
+       4.2.2.2.1.1. There are more yes than no votes. (§ 47 I)
+     case 4.2.2.2.2. There is a special AoA majority requirement.
+       4.2.2.2.2.1. Yes ratio is beyond the majority requirement.
+     case 4.2.2.2.3. All shareholders consent to the determination in writing. (§ 48 II Var. 1)
+ 5. The list of the subscribers of the new shares is attached. (§ 57 III Nr. 2)
+ 6. The declaration of each subscriber is attached. (§ 57 III Nr. 1, § 55 I)
+   6.1. There is one declaration for each subscriber.
+   6.2. The declarations are notarized. (§ 55 I)
+   6.3. The declarations are attached (§ 57 III Nr. 1)
+     case 6.3.1. as original
+     case 6.3.2. as certified copy
+ 7. The increased capital has been covered. (§ 57 I Hs. 2)
+ 8. The assurance concerning the effectiveness and disposability of the contributions is attached. (§ 57 II 1)
+ 9. The amended AoA are plausible. (jurisdiction: GmbHR 1971, 208)
+   9.1. Former capital, increase, and new capital match.
+   9.2. New capital and the new sum of nominal values match.
+10. All directors perform the application. (§ 57 I, § 78)

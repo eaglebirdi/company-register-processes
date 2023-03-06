@@ -1,0 +1,43 @@
+Is the application of the company dissolution legal? (§ 65 I 1)
+ 1. The resolution is made legally. (§ 60 I Nr. 2)
+   1.1. The resolution is formally legal.
+     case 1.1.1. The resolution is made in a meeting. (§ 48 I)
+       case 1.1.1.1. The meeting is personal. (§ 48 I 1)
+       case 1.1.1.2. The meeting is a teleconference and all shareholders agree with this format. (§ 48 I 2)
+     case 1.1.2. There is no meeting. (§ 48 II)
+       case 1.1.2.1. All shareholders consent to the determination in writing (§ 48 II Var. 2)
+       case 1.1.2.2. All shareholders agree with a voting in writing (§ 48 II Var. 2)
+   1.2. The resolution is made with a qualified majority vote (three quarters). (§ 47 I, § 60 I Nr. 2)
+     case 1.2.1. There is no special AoA majority requirement.
+       1.2.1.1. Three quarters of the votes are yes. (§ 47 I, § 60 I Nr. 2)
+     case 1.2.2. There is a special AoA majority requirement.
+       1.2.2.1. Yes ratio is beyond the majority requirement.
+     case 1.2.3. All shareholders consent to the determination in writing. (§ 48 II Var. 1)
+   1.3. The resolution is notarized if the AoA are amended. (§ 53 II 1, § 60 I Nr. 1, § 3 II)
+ 2. The liquidators are determined. (§ 66 I)
+   case 2.1. The liquidators are determined in the AoA.
+   case 2.2. The liquidators are determined in the resolution.
+   case 2.3. The liquidators are the directors (default case).
+ 3. The deed for the appointment of the liquidators is attached. (§ 67 II)
+   case 3.1. The deed is original.
+   case 3.2. The deed is a certified copy.
+ 4. The assurances of the liquidators are signed. (§ 67 III)
+ 5. The applicants are authorized to represent the company. (§ 78, § 35 II 1, § 67 I)
+   case 5.1. The resolution entails an AoA amendment.
+     5.1.1. The directors are the applicants.
+       case 5.1.1.1. One applicant has the sole representation power
+         case 5.1.1.1.1. via the general AoA stipulation
+         case 5.1.1.1.2. via an individual stipulation
+       case 5.1.1.2. One applicant has the modified representation power and another director is present
+         case 5.1.1.2.1. via the general AoA stipulation
+         case 5.1.1.2.2. via an individual stipulation
+       case 5.1.1.3. All directors of the company perform the application.
+   case 5.2. The resolution entails no AoA amendment.
+     5.2.1. The liquidators are the applicants.
+       case 5.2.1.1. One applicant has the sole representation power
+         case 5.2.1.1.1. via the general AoA stipulation
+         case 5.2.1.1.2. via an individual stipulation
+       case 5.2.1.2. One applicant has the modified representation power and another liquidator is present
+         case 5.2.1.2.1. via the general AoA stipulation
+         case 5.2.1.2.2. via an individual stipulation
+       case 5.2.1.3. All liquidators of the company perform the application.

@@ -1,0 +1,27 @@
+Is the application of the new director valid? (§ 39 I)
+ 1. The resolution is made legally. (§ 39 II, § 46 Nr. 5, § 48 I 1)
+   1.1. The resolution is formally legal.
+     case 1.1.1. The resolution is made in a meeting. (§ 48 I)
+       case 1.1.1.1. The meeting is personal. (§ 48 I 1)
+       case 1.1.1.2. The meeting is a teleconference and all shareholders agree with this format. (§ 48 I 2)
+     case 1.1.2. There is no meeting. (§ 48 II)
+       case 1.1.2.1. All shareholders consent to the determination in writing (§ 48 II Var. 2)
+       case 1.1.2.2. All shareholders agree with a voting in writing (§ 48 II Var. 2)
+   1.2. The resolution is made with a majority vote. (§ 47 I)
+     case 1.2.1. There is no special AoA majority requirement.
+       1.2.1.1. There are more yes than no votes. (§ 47 I)
+     case 1.2.2. There is a special AoA majority requirement.
+       1.2.2.1. Yes ratio is beyond the majority requirement.
+     case 1.2.3. All shareholders consent to the determination in writing. (§ 48 II Var. 1)
+ 2. The deed of the director's appointment is attached. (§ 39 II)
+   case 2.1. The deed is original.
+   case 2.2. The deed is a certified copy.
+ 3. The new director has signed an assertion for being qualified and for having been instructed about the obligation to disclosure. (§ 39 III 1)
+ 4. The applying directors are authorized to represent the company. (§ 78, § 35 II 1)
+   case 4.1. One applicant has the sole representation power
+     case 4.1.1. via the general AoA stipulation
+     case 4.1.2. via an individual stipulation
+   case 4.2. One applicant has the modified representation power and another director is present
+     case 4.2.1. via the general AoA stipulation
+     case 4.2.2. via an individual stipulation
+   case 4.3. All directors of the company perform the application.
