@@ -2,6 +2,7 @@ from typing import Tuple
 from colorama import Fore, Back, Style
 from .ProofTreeGeneration.Tree import Tree
 from .ProofTreeGeneration.Item import Item
+from .ProofTreeGeneration.EnrichedItem import EnrichedItem
 from .ProofTreeGeneration.ProofStatus import ProofStatus
 
 color_proved = Fore.GREEN
@@ -43,6 +44,9 @@ class ProofVisualizer:
                 self._print(child, lvl+1)
 
     def _get_color_and_icon(self, item: Item) -> Tuple[str, str]:
+        if not isinstance(item, EnrichedItem):
+            return color_default, icon_default
+
         if item.proof_status == ProofStatus.PROVED:
             return color_proved, icon_proved
         elif item.proof_status == ProofStatus.NOT_PROVED:
