@@ -6,10 +6,10 @@ from .LogicProgramsGenerator import LogicProgramsGenerator
 from .ProverInvoker import ProverInvoker
 from .ProofVisualizer import ProofVisualizer
 
-from .ProofTreeGeneration.Tree import Tree
-from .ProofTreeGeneration.Item import Item
-from .ProofTreeGeneration.EnrichedItem import EnrichedItem
-from .ProofTreeGeneration.ProofStatus import ProofStatus
+from .ProofTreeGeneration.ProofTree.Tree import Tree
+from .ProofTreeGeneration.ProofTree.Item import Item
+from .ProofTreeGeneration.ProofTree.EnrichedItem import EnrichedItem
+from .ProofTreeGeneration.ProofTree.ProofStatus import ProofStatus
 
 from .ProverTools.IProverTool import IProverTool
 from .ProverTools.Cvc5Prover import Cvc5Prover

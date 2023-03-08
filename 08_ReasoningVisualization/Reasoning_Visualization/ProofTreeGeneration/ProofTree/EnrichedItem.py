@@ -1,7 +1,7 @@
 from typing import List, Union
 from .Item import Item
 from .ProofStatus import ProofStatus
-from ..TPTPProgram import TPTPProgram
+from ...TPTPProgram import TPTPProgram
 
 
 class EnrichedItem(Item):

@@ -1,9 +1,9 @@
 from typing import Tuple
 from colorama import Fore, Back, Style
-from .ProofTreeGeneration.Tree import Tree
-from .ProofTreeGeneration.Item import Item
-from .ProofTreeGeneration.EnrichedItem import EnrichedItem
-from .ProofTreeGeneration.ProofStatus import ProofStatus
+from .ProofTreeGeneration.ProofTree.Tree import Tree
+from .ProofTreeGeneration.ProofTree.Item import Item
+from .ProofTreeGeneration.ProofTree.EnrichedItem import EnrichedItem
+from .ProofTreeGeneration.ProofTree.ProofStatus import ProofStatus
 
 color_proved = Fore.GREEN
 color_nonproved_necessary = Back.RED + Fore.BLACK

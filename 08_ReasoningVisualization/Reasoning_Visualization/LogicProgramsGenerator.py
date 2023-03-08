@@ -1,7 +1,7 @@
 import copy
-from .ProofTreeGeneration.Tree import Tree
-from .ProofTreeGeneration.Item import Item
-from .ProofTreeGeneration.EnrichedItem import EnrichedItem
+from .ProofTreeGeneration.ProofTree.Tree import Tree
+from .ProofTreeGeneration.ProofTree.Item import Item
+from .ProofTreeGeneration.ProofTree.EnrichedItem import EnrichedItem
 from .TPTPProgram import TPTPProgram
 from .Configuration import Configuration
 
