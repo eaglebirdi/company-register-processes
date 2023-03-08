@@ -1,0 +1,133 @@
+% TYPES
+
+tff(type_company, type, company: $tType).
+tff(type_shareholder, type, shareholder: $tType).
+tff(type_director, type, director: $tType).
+tff(type_person, type, person: $tType).
+
+tff(type_application, type, application: $tType).
+tff(type_capitalincreaseresolution, type, capitalincreaseresolution: $tType).
+tff(type_permitresolution, type, permitresolution: $tType).
+tff(type_meeting, type, meeting: $tType).
+tff(type_voting, type, voting: $tType).
+tff(type_subscriberlist, type, subscriberlist: $tType).
+tff(type_subscription, type, subscription: $tType).
+tff(type_declaration, type, declaration: $tType).
+tff(type_assurance, type, assurance: $tType).
+tff(type_amendedAoA, type, amendedAoA: $tType).
+
+tff(type_meetingformat, type, meetingformat: $tType).
+tff(type_declarationformat, type, declarationformat: $tType).
+
+
+
+% RULE PREDICATES
+
+tff(pred_is_application_legal, type, is_application_legal: application > $o). % main rule
+
+tff(pred_is_meeting_legal, type, is_meeting_legal: meeting > $o).
+tff(pred_is_personal_meeting_legal, type, is_personal_meeting_legal: meeting > $o).
+tff(pred_is_teleconference_meeting_legal, type, is_teleconference_meeting_legal: meeting > $o).
+tff(pred_do_all_shareholders_consent_to_teleconference_meeting, type, do_all_shareholders_consent_to_teleconference_meeting: meeting > $o).
+
+tff(pred_is_capital_increase_resolution_legal, type, is_capital_increase_resolution_legal: capitalincreaseresolution > $o). % scheme item 3
+tff(pred_is_capital_increase_resolution_formally_legal, type, is_capital_increase_resolution_formally_legal: capitalincreaseresolution > $o).
+tff(pred_is_capital_increase_resolution_with_meeting_formally_legal, type, is_capital_increase_resolution_with_meeting_formally_legal: capitalincreaseresolution > $o).
+tff(pred_is_capital_increase_resolution_without_meeting_formally_legal, type, is_capital_increase_resolution_without_meeting_formally_legal: capitalincreaseresolution > $o).
+tff(pred_do_all_shareholders_consent_to_the_determination_ci, type, do_all_shareholders_consent_to_the_determination_ci: capitalincreaseresolution > $o).
+tff(pred_do_all_shareholders_consent_to_voting_in_writing_ci, type, do_all_shareholders_consent_to_voting_in_writing_ci: capitalincreaseresolution > $o).
+tff(pred_has_capital_increase_resolution_qualified_majority, type, has_capital_increase_resolution_qualified_majority: capitalincreaseresolution > $o).
+tff(pred_is_capital_increase_resolution_passed_via_voting, type, is_capital_increase_resolution_passed_via_voting: capitalincreaseresolution > $o).
+
+tff(pred_are_permit_resolution_requirements_fulfilled, type, are_permit_resolution_requirements_fulfilled: application > $o). % scheme item 4
+tff(pred_is_permit_resolution_legal_and_complete, type, is_permit_resolution_legal_and_complete: application > $o). % scheme 4.2
+tff(pred_are_all_newly_joining_shareholders_mentioned_in_permit_resolution, type, are_all_newly_joining_shareholders_mentioned_in_permit_resolution: permitresolution > $o). % scheme 4.2.1
+tff(pred_there_is_no_newly_joining_shareholder, type, there_is_no_newly_joining_shareholder: application > $o).
+tff(pred_is_newly_joining_shareholder, type, is_newly_joining_shareholder: (shareholder * application) > $o).
+
+tff(pred_is_permit_resolution_legal, type, is_permit_resolution_legal: permitresolution > $o). % scheme item 4.2.2
+tff(pred_is_permit_resolution_formally_legal, type, is_permit_resolution_formally_legal: permitresolution > $o).
+tff(pred_is_permit_resolution_with_meeting_formally_legal, type, is_permit_resolution_with_meeting_formally_legal: permitresolution > $o).
+tff(pred_is_permit_resolution_without_meeting_formally_legal, type, is_permit_resolution_without_meeting_formally_legal: permitresolution > $o).
+tff(pred_do_all_shareholders_consent_to_the_determination_per, type, do_all_shareholders_consent_to_the_determination_per: permitresolution > $o).
+tff(pred_do_all_shareholders_consent_to_voting_in_writing_per, type, do_all_shareholders_consent_to_voting_in_writing_per: permitresolution > $o).
+tff(pred_has_permit_resolution_majority, type, has_permit_resolution_majority: permitresolution > $o).
+tff(pred_is_permit_resolution_passed_via_voting, type, is_permit_resolution_passed_via_voting: permitresolution > $o).
+
+tff(pred_is_list_of_subscribers_attached, type, is_list_of_subscribers_attached: application > $o). % scheme item 5
+
+tff(pred_are_subscriber_declarations_legal, type, are_subscriber_declarations_legal: application > $o). % scheme item 6
+tff(pred_there_is_one_declaration_per_subscriber, type, there_is_one_declaration_per_subscriber: application > $o). % scheme item 6.1
+tff(pred_are_all_declarations_legal, type, are_all_declarations_legal: application > $o). % scheme items 6.2 and 6.3
+
+tff(pred_is_amended_AoA_plausible, type, is_amended_AoA_plausible: amendedAoA > $o). % scheme item 9
+tff(pred_is_amended_AoA_plausible_concerning_old_new_increase, type, is_amended_AoA_plausible_concerning_old_new_increase: amendedAoA > $o). % scheme item 9.1
+tff(pred_is_amendedAoA_plausible_concerning_new_sum_of_nominals, type, is_amendedAoA_plausible_concerning_new_sum_of_nominals: amendedAoA > $o). % scheme item 9.2
+
+tff(pred_do_all_directors_perform_the_application, type, do_all_directors_perform_the_application: application > $o). % scheme item 10
+
+
+
+% RELATION PREDICATES
+
+tff(pred_company_capitalincreaseresolution, type, company_capitalincreaseresolution: (company * capitalincreaseresolution) > $o).
+
+tff(pred_application_capitalincreaseresolution, type, application_capitalincreaseresolution: (application * capitalincreaseresolution) > $o).
+tff(pred_capitalincreaseresolution_meeting, type, capitalincreaseresolution_meeting: (capitalincreaseresolution * meeting) > $o).
+tff(pred_capitalincreaseresolution_voting, type, capitalincreaseresolution_voting: (capitalincreaseresolution * voting) > $o).
+
+tff(pred_application_permitresolution, type, application_permitresolution: (application * permitresolution) > $o).
+tff(pred_permitresolution_meeting, type, permitresolution_meeting: (permitresolution * meeting) > $o).
+tff(pred_permitresolution_voting, type, permitresolution_voting: (permitresolution * voting) > $o).
+
+tff(pred_application_amendedAoA, type, application_amendedAoA: (application * amendedAoA) > $o).
+tff(pred_application_assurance, type, application_assurance: (application * assurance) > $o).
+tff(pred_application_subscriberlist, type, application_subscriberlist: (application * subscriberlist) > $o).
+
+
+
+% FACT PREDICATES
+
+tff(pred_shareholder_company, type, shareholder_company: (shareholder * company) > $o).
+tff(pred_shareholder_person, type, shareholder_person: (shareholder * person) > $o).
+tff(pred_shareholder_votes, type, shareholder_votes: (shareholder * $int) > $o).
+
+tff(pred_director_company, type, director_company: (director * company) > $o).
+tff(pred_director_person, type, director_person: (director * person) > $o).
+
+tff(pred_meeting_format, type, meeting_format: (meeting * meetingformat) > $o).
+tff(pred_does_shareholder_consent_to_teleconference_meeting, type, does_shareholder_consent_to_teleconference_meeting: (meeting * shareholder) > $o).
+tff(pred_does_shareholder_consent_to_the_determination_ci, type, does_shareholder_consent_to_the_determination_ci: (capitalincreaseresolution * shareholder) > $o).
+tff(pred_does_shareholder_consent_to_voting_in_writing_ci, type, does_shareholder_consent_to_voting_in_writing_ci: (capitalincreaseresolution * shareholder) > $o).
+tff(pred_does_shareholder_consent_to_the_determination_per, type, does_shareholder_consent_to_the_determination_per: (permitresolution * shareholder) > $o).
+tff(pred_does_shareholder_consent_to_voting_in_writing_per, type, does_shareholder_consent_to_voting_in_writing_per: (permitresolution * shareholder) > $o).
+
+tff(pred_voting_yesvotes, type, voting_yesvotes: (voting * $int) > $o).
+tff(pred_voting_novotes, type, voting_novotes: (voting * $int) > $o).
+tff(pred_voting_abstentions, type, voting_abstentions: (voting * $int) > $o).
+tff(pred_voting_yesratio, type, voting_yesratio: (voting * $real) > $o).
+
+tff(pred_application_declaration, type, application_declaration: (application * declaration) > $o).
+tff(pred_declaration_shareholder, type, declaration_shareholder: (declaration * shareholder) > $o).
+tff(pred_permitresolution_shareholder, type, permitresolution_shareholder: (permitresolution * shareholder) > $o).
+tff(pred_subscriberlist_subscription, type, subscriberlist_subscription: (subscriberlist * subscription) > $o).
+
+tff(pred_subscription_shareholder, type, subscription_shareholder: (subscription * shareholder) > $o).
+tff(pred_subscription_shares, type, subscription_shares: (subscription * $int) > $o).
+
+tff(pred_is_capitalincreaseresolution_notarized, type, is_capitalincreaseresolution_notarized: capitalincreaseresolution > $o).
+tff(pred_is_permitresolution_notarized, type, is_permitresolution_notarized: permitresolution > $o).
+
+tff(pred_amendedAoA_formercapital, type, amendedAoA_formercapital: (amendedAoA * $int) > $o).
+tff(pred_amendedAoA_increase, type, amendedAoA_increase: (amendedAoA * $int) > $o).
+tff(pred_amendedAoA_newcapital, type, amendedAoA_newcapital: (amendedAoA * $int) > $o).
+
+tff(pred_is_declaration_notarized, type, is_declaration_notarized: declaration > $o).
+tff(pred_declaration_format, type, declaration_format: (declaration * declarationformat) > $o).
+
+tff(pred_contains_AoA_full_text, type, contains_AoA_full_text: application > $o). % scheme item 1
+tff(pred_are_matches_notarily_certified, type, are_matches_notarily_certified: application > $o). % scheme item 2
+tff(pred_has_increased_capital_been_covered, type, has_increased_capital_been_covered: application > $o). % scheme item 7
+tff(pred_application_applicant, type, application_applicant: (application * director) > $o).
+
+tff(pred_is_assurance_signed, type, is_assurance_signed: assurance > $o). % scheme item 8

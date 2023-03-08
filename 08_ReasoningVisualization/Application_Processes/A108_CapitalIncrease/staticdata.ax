@@ -1,0 +1,11 @@
+tff(inst_personal, type, personal: meetingformat).
+tff(inst_teleconference, type, teleconference: meetingformat).
+
+tff(inst_original, type, original: declarationformat).
+tff(inst_certifiedcopy, type, certifiedcopy: declarationformat).
+
+tff(inequality_joint_modified, axiom, joint != modified).
+tff(inequality_joint_sole, axiom, joint != sole).
+tff(inequality_modified_sole, axiom, modified != sole).
+tff(inequality_personal_teleconference, axiom, personal != teleconference).
+tff(inequality_original_certifiedcopy, axiom, original != certifiedcopy).

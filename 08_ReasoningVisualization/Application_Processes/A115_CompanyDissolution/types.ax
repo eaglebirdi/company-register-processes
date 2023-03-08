@@ -1,0 +1,107 @@
+% TYPES
+
+tff(type_company, type, company: $tType).
+tff(type_shareholder, type, shareholder: $tType).
+tff(type_director, type, director: $tType).
+tff(type_person, type, person: $tType).
+tff(type_resolution, type, resolution: $tType).
+tff(type_meeting, type, meeting: $tType).
+tff(type_voting, type, voting: $tType).
+tff(type_application, type, application: $tType).
+tff(type_liquidatorlist, type, liquidatorlist: $tType).
+tff(type_assurance, type, assurance: $tType).
+tff(type_deed, type, deed: $tType).
+
+tff(type_representationpower, type, representationpower: $tType).
+tff(type_meetingformat, type, meetingformat: $tType).
+tff(type_deedformat, type, deedformat: $tType).
+
+
+
+% RULE PREDICATES
+
+tff(pred_is_application_legal, type, is_application_legal: application > $o). % main rule
+
+tff(pred_is_resolution_legal, type, is_resolution_legal: resolution > $o). % scheme item 1
+tff(pred_is_resolution_formally_legal, type, is_resolution_formally_legal: resolution > $o). % scheme item 1.1
+tff(pred_is_resolution_with_meeting_formally_legal, type, is_resolution_with_meeting_formally_legal: resolution > $o). % scheme item 1.1.1
+tff(pred_is_resolution_without_meeting_formally_legal, type, is_resolution_without_meeting_formally_legal: resolution > $o). % scheme item 1.1.2
+
+tff(pred_is_meeting_legal, type, is_meeting_legal: meeting > $o). % scheme item 1.1.1
+tff(pred_is_personal_meeting_legal, type, is_personal_meeting_legal: meeting > $o). % scheme item 1.1.1.1
+tff(pred_is_teleconference_meeting_legal, type, is_teleconference_meeting_legal: meeting > $o). % scheme item 1.1.1.2
+
+tff(pred_do_all_shareholders_consent_to_teleconference_meeting, type, do_all_shareholders_consent_to_teleconference_meeting: meeting > $o). % scheme item 1.1.1.2
+tff(pred_do_all_shareholders_consent_to_the_determination, type, do_all_shareholders_consent_to_the_determination: resolution > $o). % scheme item 1.1.2.1
+tff(pred_do_all_shareholders_consent_to_voting_in_writing, type, do_all_shareholders_consent_to_voting_in_writing: resolution > $o). % scheme item 1.1.2.2
+
+tff(pred_has_resolution_qualified_majority, type, has_resolution_qualified_majority: resolution > $o). % scheme item 1.2
+tff(pred_is_resolution_passed_via_voting, type, is_resolution_passed_via_voting: resolution > $o). % scheme items 1.2.1 & items 1.2.2
+
+tff(pred_is_resolution_notarized_if_AoA_are_amended, type, is_resolution_notarized_if_AoA_are_amended: resolution > $o). % scheme item 1.3
+
+tff(pred_company_liquidatorlist, type, company_liquidatorlist: (company * liquidatorlist) > $o). % scheme item 2
+
+tff(pred_is_liquidator_appointment_deed_legal, type, is_liquidator_appointment_deed_legal: deed > $o). % scheme item 3
+tff(pred_are_all_liquidator_assurances_signed, type, are_all_liquidator_assurances_signed: application > $o). % scheme item 4
+tff(pred_are_applicants_authorized, type, are_applicants_authorized: application > $o). % scheme item 5
+
+tff(pred_are_applicants_authorized, type, are_applicants_authorized: application > $o). % scheme item 5
+tff(pred_are_applicants_authorized_via_general_sole_representation_power, type, are_applicants_authorized_via_general_sole_representation_power: application > $o). % scheme item 5.1
+tff(pred_are_applicants_authorized_via_individual_sole_representation_power, type, are_applicants_authorized_via_individual_sole_representation_power: application > $o). % scheme item 5.1
+tff(pred_are_applicants_authorized_via_general_modified_representation_power, type, are_applicants_authorized_via_general_modified_representation_power: application > $o). % scheme item 5.2
+tff(pred_are_applicants_authorized_via_individual_modified_representation_power, type, are_applicants_authorized_via_individual_modified_representation_power: application > $o). % scheme item 5.2
+tff(pred_are_all_liquidators_present, type, are_all_liquidators_present: application > $o). % scheme item 5.3
+
+tff(pred_are_AoA_amended, type, are_AoA_amended: resolution > $o).
+
+
+
+% RELATION PREDICATES
+
+tff(pred_company_resolution, type, company_resolution: (company * resolution) > $o).
+
+tff(pred_company_AoA_liquidatorlist, type, company_AoA_liquidatorlist: (company * liquidatorlist) > $o).
+tff(pred_resolution_liquidatorlist, type, resolution_liquidatorlist: (resolution * liquidatorlist) > $o).
+tff(pred_liquidatorlist_liquidator, type, liquidatorlist_liquidator: (liquidatorlist * director) > $o).
+
+tff(pred_resolution_meeting, type, resolution_meeting: (resolution * meeting) > $o).
+tff(pred_resolution_voting, type, resolution_voting: (resolution * voting) > $o).
+
+tff(pred_application_resolution, type, application_resolution: (application * resolution) > $o).
+tff(pred_application_deed, type, application_deed: (application * deed) > $o).
+tff(pred_application_assurance, type, application_assurance: (application * assurance) > $o).
+
+tff(pred_application_applicant, type, application_applicant: (application * director) > $o).
+
+
+
+% FACT PREDICATES
+
+tff(pred_company_representationpower, type, company_representationpower: (company * representationpower) > $o).
+tff(pred_has_company_expiration_date, type, has_company_expiration_date: company > $o).
+
+tff(pred_shareholder_company, type, shareholder_company: (shareholder * company) > $o).
+tff(pred_shareholder_person, type, shareholder_person: (shareholder * person) > $o).
+tff(pred_shareholder_votes, type, shareholder_votes: (shareholder * $int) > $o).
+
+tff(pred_director_company, type, director_company: (director * company) > $o).
+tff(pred_director_person, type, director_person: (director * person) > $o).
+tff(pred_director_representationpower, type, director_representationpower: (director * representationpower) > $o).
+tff(pred_director_exemption181, type, director_exemption181: director > $o).
+
+tff(pred_meeting_format, type, meeting_format: (meeting * meetingformat) > $o).
+tff(pred_does_shareholder_consent_to_teleconference_meeting, type, does_shareholder_consent_to_teleconference_meeting: (meeting * shareholder) > $o).
+tff(pred_does_shareholder_consent_to_the_determination, type, does_shareholder_consent_to_the_determination: (resolution * shareholder) > $o).
+tff(pred_does_shareholder_consent_to_voting_in_writing, type, does_shareholder_consent_to_voting_in_writing: (resolution * shareholder) > $o).
+
+tff(pred_voting_yesvotes, type, voting_yesvotes: (voting * $int) > $o).
+tff(pred_voting_novotes, type, voting_novotes: (voting * $int) > $o).
+tff(pred_voting_abstentions, type, voting_abstentions: (voting * $int) > $o).
+tff(pred_voting_yesratio, type, voting_yesratio: (voting * $real) > $o).
+
+tff(pred_is_resolution_notarized, type, is_resolution_notarized: resolution > $o).
+
+tff(pred_deed_format, type, deed_format: (deed * deedformat) > $o).
+tff(pred_assurance_signer, type, assurance_signer: (assurance * director) > $o).
+tff(pred_application_applicant, type, application_applicant: (application * director) > $o).

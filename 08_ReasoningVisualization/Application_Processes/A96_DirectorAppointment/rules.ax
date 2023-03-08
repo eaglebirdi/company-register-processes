@@ -1,0 +1,406 @@
+tff(is_application_legal, axiom,
+  ! [Application: application] :
+  (
+    is_application_legal(Application)
+    <=
+    ? [Resolution: resolution, Assurance: assurance, Deed: deed] :
+    (
+      application_resolution(Application, Resolution)
+    & application_assurance(Application, Assurance)
+    & resolution_deed(Resolution, Deed)
+    
+    & is_resolution_legal(Resolution)
+    & is_deed_legal(Deed)
+    & is_assurance_legal(Assurance)
+    & are_applicants_authorized(Application)
+    )
+  )
+).
+
+tff(is_resolution_legal, axiom,
+  ! [Resolution: resolution] :
+  (
+    is_resolution_legal(Resolution)
+    <=
+    (
+      is_resolution_formally_legal(Resolution)
+    & has_resolution_majority(Resolution)
+    )
+  )
+).
+
+tff(is_resolution_formally_legal, axiom,
+  ! [Resolution: resolution] :
+  (
+    is_resolution_formally_legal(Resolution)
+    <=
+    (
+      is_resolution_with_meeting_formally_legal(Resolution)
+    | is_resolution_without_meeting_formally_legal(Resolution)
+    )
+  )
+).
+
+tff(is_resolution_with_meeting_formally_legal, axiom,
+  ! [Resolution: resolution] :
+  (
+    is_resolution_with_meeting_formally_legal(Resolution)
+    <=
+    ? [Meeting: meeting] :
+    (
+      resolution_meeting(Resolution, Meeting)
+    & is_meeting_legal(Meeting)
+    )
+  )
+).
+
+tff(is_resolution_without_meeting_formally_legal, axiom,
+  ! [Resolution: resolution] :
+  (
+    is_resolution_without_meeting_formally_legal(Resolution)
+    <=
+    (
+      (
+        ~? [Meeting: meeting] :
+        (
+          resolution_meeting(Resolution, Meeting)
+        )
+      )
+    & (
+        do_all_shareholders_consent_to_the_determination(Resolution)
+      | do_all_shareholders_consent_to_voting_in_writing(Resolution)
+      )
+    )
+  )
+).
+
+tff(is_meeting_legal, axiom,
+  ! [Meeting: meeting] :
+  (
+    is_meeting_legal(Meeting)
+    <=
+    (
+      is_personal_meeting_legal(Meeting)
+    | is_teleconference_meeting_legal(Meeting)
+    )
+  )
+).
+
+tff(is_personal_meeting_legal, axiom,
+  ! [Meeting: meeting] :
+  (
+    is_personal_meeting_legal(Meeting)
+    <=
+    (
+      meeting_format(Meeting, personal)
+    )
+  )
+).
+
+tff(is_teleconference_meeting_legal, axiom,
+  ! [Meeting: meeting] :
+  (
+    is_teleconference_meeting_legal(Meeting)
+    <=
+    (
+      meeting_format(Meeting, teleconference)
+    & do_all_shareholders_consent_to_teleconference_meeting(Meeting)
+    )
+  )
+).
+
+tff(do_all_shareholders_consent_to_teleconference_meeting, axiom,
+  ! [Meeting: meeting] :
+  (
+    do_all_shareholders_consent_to_teleconference_meeting(Meeting)
+    <=
+    (
+      ? [Resolution: resolution, Company: company] :
+      (
+        resolution_meeting(Resolution, Meeting)
+      & company_resolution(Company, Resolution)
+      & (
+          ! [Shareholder: shareholder] :
+          (
+            shareholder_company(Shareholder, Company)
+            =>
+            does_shareholder_consent_to_teleconference_meeting(Meeting, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(do_all_shareholders_consent_to_the_determination, axiom,
+  ! [Resolution: resolution] :
+  (
+    do_all_shareholders_consent_to_the_determination(Resolution)
+    <=
+    (
+      ? [Company: company] :
+      (
+        company_resolution(Company, Resolution)
+      & (
+          ! [Shareholder: shareholder] :
+          (
+            shareholder_company(Shareholder, Company)
+            =>
+            does_shareholder_consent_to_the_determination(Resolution, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(do_all_shareholders_consent_to_voting_in_writing, axiom,
+  ! [Resolution: resolution] :
+  (
+    do_all_shareholders_consent_to_voting_in_writing(Resolution)
+    <=
+    (
+      ? [Company: company] :
+      (
+        company_resolution(Company, Resolution)
+      & (
+          ! [Shareholder: shareholder] :
+          (
+            shareholder_company(Shareholder, Company)
+            =>
+            does_shareholder_consent_to_voting_in_writing(Resolution, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(has_resolution_majority, axiom,
+  ! [Resolution: resolution] :
+  (
+    has_resolution_majority(Resolution)
+    <=
+    (
+      do_all_shareholders_consent_to_the_determination(Resolution)
+    | is_resolution_passed_via_voting(Resolution)
+    )
+  )
+).
+
+tff(is_resolution_passed_via_voting_positive, axiom,
+  ! [Resolution: resolution] :
+  (
+    is_resolution_passed_via_voting(Resolution)
+    <=
+    ? [Voting: voting, Company: company, MajReq: $real, YesRatio: $real] :
+    (
+      resolution_voting(Resolution, Voting)
+    & company_resolution(Company, Resolution)
+    & company_majorityrequirement(Company, MajReq)
+    & voting_yesratio(Voting, YesRatio)
+    & $greater(YesRatio, MajReq)
+    )
+  )
+).
+
+tff(is_resolution_passed_via_voting_negative, axiom,
+  ! [Resolution: resolution] :
+  (
+    ~is_resolution_passed_via_voting(Resolution)
+    <=
+    ? [Voting: voting, Company: company, MajReq: $real, YesRatio: $real] :
+    (
+      resolution_voting(Resolution, Voting)
+    & company_resolution(Company, Resolution)
+    & company_majorityrequirement(Company, MajReq)
+    & voting_yesratio(Voting, YesRatio)
+    & $lesseq(YesRatio, MajReq)
+    )
+  )
+).
+
+tff(voting_yesratio, axiom,
+  ! [Voting: voting, YesRatio: $real] :
+  (
+    voting_yesratio(Voting, YesRatio)
+    <=
+    ? [YesVotes: $int, NoVotes: $int] :
+    (
+      voting_yesvotes(Voting, YesVotes)
+    & voting_novotes(Voting, NoVotes)
+    & $quotient($to_real(YesVotes), $to_real($sum(YesVotes, NoVotes))) = YesRatio
+    )
+  )
+).
+
+tff(company_majorityrequirement, axiom,
+  ! [Company: company, MajReq: $real] :
+  (
+    company_majorityrequirement(Company, MajReq)
+    <=>
+    (
+      company_majorityrequirement_AoA(Company, MajReq)
+    | (
+        ~? [X: $real] : (company_majorityrequirement_AoA(Company, X))
+      & MajReq = 0.50
+      )
+    )
+  )
+).
+
+tff(is_deed_legal, axiom,
+  ! [Deed: deed] :
+  (
+    is_deed_legal(Deed)
+    <=
+    (
+      deed_format(Deed, original)
+    | deed_format(Deed, certifiedcopy)
+    )
+  )
+).
+
+tff(is_assurance_legal, axiom,
+  ! [Assurance: assurance] :
+  (
+    is_assurance_legal(Assurance)
+    <=
+    ? [Application: application, Resolution: resolution, NewDirector: director] :
+    (
+      application_assurance(Application, Assurance)
+    & application_resolution(Application, Resolution)
+    & resolution_newdirector(Resolution, NewDirector)
+    
+    & is_assurance_signed(Assurance, NewDirector)
+    )
+  )
+).
+
+tff(are_applicants_authorized, axiom,
+  ! [Application: application] :
+  (
+    are_applicants_authorized(Application)
+    <=
+    (
+      are_applicants_authorized_via_general_sole_representation_power(Application)
+    | are_applicants_authorized_via_individual_sole_representation_power(Application)
+    | are_applicants_authorized_via_general_modified_representation_power(Application)
+    | are_applicants_authorized_via_individual_modified_representation_power(Application)
+    | are_all_directors_present(Application)
+    )
+  )
+).
+
+tff(are_applicants_authorized_via_general_sole_representation_power, axiom,
+  ! [Application: application] :
+  (
+    are_applicants_authorized_via_general_sole_representation_power(Application)
+    <=
+    (
+      ? [Resolution: resolution, Company: company, Director: director] :
+      (
+        application_resolution(Application, Resolution)
+      & company_resolution(Company, Resolution)
+      & company_representationpower(Company, sole)
+      & director_company(Director, Company)
+      & application_applicant(Application, Director)
+      & (
+          ~? [Repr: representationpower] :
+          (
+            director_representationpower(Director, Repr)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(are_applicants_authorized_via_individual_sole_representation_power, axiom,
+  ! [Application: application] :
+  (
+    are_applicants_authorized_via_individual_sole_representation_power(Application)
+    <=
+    (
+      ? [Resolution: resolution, Company: company, Director: director] :
+      (
+        application_resolution(Application, Resolution)
+      & company_resolution(Company, Resolution)
+      & director_company(Director, Company)
+      & application_applicant(Application, Director)
+      & director_representationpower(Director, sole)
+      )
+    )
+  )
+).
+
+tff(are_applicants_authorized_via_general_modified_representation_power, axiom,
+  ! [Application: application] :
+  (
+    are_applicants_authorized_via_general_modified_representation_power(Application)
+    <=
+    (
+      ? [Resolution: resolution, Company: company, Director1: director, Director2: director] :
+      (
+        application_resolution(Application, Resolution)
+      & company_resolution(Company, Resolution)
+      & company_representationpower(Company, modified)
+      & director_company(Director1, Company)
+      & director_company(Director2, Company)
+      & application_applicant(Application, Director1)
+      & application_applicant(Application, Director2)
+      & (
+          ~? [Repr: representationpower] :
+          (
+            director_representationpower(Director1, Repr)
+          )
+        )
+      & Director1 != Director2
+      )
+    )
+  )
+).
+
+tff(are_applicants_authorized_via_individual_modified_representation_power, axiom,
+  ! [Application: application] :
+  (
+    are_applicants_authorized_via_individual_modified_representation_power(Application)
+    <=
+    (
+      ? [Resolution: resolution, Company: company, Director1: director, Director2: director] :
+      (
+        application_resolution(Application, Resolution)
+      & company_resolution(Company, Resolution)
+      & director_company(Director1, Company)
+      & director_company(Director2, Company)
+      & application_applicant(Application, Director1)
+      & application_applicant(Application, Director2)
+      & director_representationpower(Director1, modified)
+      & Director1 != Director2
+      )
+    )
+  )
+).
+
+tff(are_all_directors_present, axiom,
+  ! [Application: application] :
+  (
+    are_all_directors_present(Application)
+    <=
+    (
+      ? [Company: company, Resolution: resolution] :
+      (
+        application_resolution(Application, Resolution)
+      & company_resolution(Company, Resolution)
+      & (
+          ! [Director: director] :
+          (
+            director_company(Director, Company)
+            =>
+            application_applicant(Application, Director)
+          )
+        )
+      )
+    )
+  )
+).

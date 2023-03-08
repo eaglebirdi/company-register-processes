@@ -1,0 +1,650 @@
+tff(is_application_legal, axiom,
+  ! [Application: application] :
+  (
+    is_application_legal(Application)
+    <=
+    (
+      ? [AmendedAoA: amendedAoA, CapitalIncreaseResolution: capitalincreaseresolution, Assurance: assurance] :
+      (
+        application_amendedAoA(Application, AmendedAoA)
+      & application_capitalincreaseresolution(Application, CapitalIncreaseResolution)
+      & application_assurance(Application, Assurance)
+      
+      & contains_AoA_full_text(Application)
+      & are_matches_notarily_certified(Application)
+      & is_capital_increase_resolution_legal(CapitalIncreaseResolution)
+      & are_permit_resolution_requirements_fulfilled(Application)
+      & is_list_of_subscribers_attached(Application)
+      & are_subscriber_declarations_legal(Application)
+      & has_increased_capital_been_covered(Application)
+      & is_assurance_signed(Assurance)
+      & is_amended_AoA_plausible(AmendedAoA)
+      & do_all_directors_perform_the_application(Application)
+      )
+    )
+  )
+).
+
+
+tff(is_capital_increase_resolution_legal, axiom,
+  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
+  (
+    is_capital_increase_resolution_legal(CapitalIncreaseResolution)
+    <=
+    (
+      is_capital_increase_resolution_formally_legal(CapitalIncreaseResolution)
+    & has_capital_increase_resolution_qualified_majority(CapitalIncreaseResolution)
+    & is_capitalincreaseresolution_notarized(CapitalIncreaseResolution)
+    )
+  )
+).
+
+tff(is_capital_increase_resolution_formally_legal, axiom,
+  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
+  (
+    is_capital_increase_resolution_formally_legal(CapitalIncreaseResolution)
+    <=
+    (
+      is_capital_increase_resolution_with_meeting_formally_legal(CapitalIncreaseResolution)
+    | is_capital_increase_resolution_without_meeting_formally_legal(CapitalIncreaseResolution)
+    )
+  )
+).
+
+tff(is_capital_increase_resolution_with_meeting_formally_legal, axiom,
+  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
+  (
+    is_capital_increase_resolution_with_meeting_formally_legal(CapitalIncreaseResolution)
+    <=
+    ? [Meeting: meeting] :
+    (
+      capitalincreaseresolution_meeting(CapitalIncreaseResolution, Meeting)
+    & is_meeting_legal(Meeting)
+    )
+  )
+).
+
+tff(is_capital_increase_resolution_without_meeting_formally_legal, axiom,
+  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
+  (
+    is_capital_increase_resolution_without_meeting_formally_legal(CapitalIncreaseResolution)
+    <=
+    (
+      (
+        ~? [Meeting: meeting] :
+        (
+          capitalincreaseresolution_meeting(CapitalIncreaseResolution, Meeting)
+        )
+      )
+    & (
+        do_all_shareholders_consent_to_the_determination_ci(CapitalIncreaseResolution)
+      | do_all_shareholders_consent_to_voting_in_writing_ci(CapitalIncreaseResolution)
+      )
+    )
+  )
+).
+
+tff(do_all_shareholders_consent_to_the_determination_ci, axiom,
+  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
+  (
+    do_all_shareholders_consent_to_the_determination_ci(CapitalIncreaseResolution)
+    <=
+    (
+      ? [Company: company] :
+      (
+        company_capitalincreaseresolution(Company, CapitalIncreaseResolution)
+      & (
+          ! [Shareholder: shareholder] :
+          (
+            shareholder_company(Shareholder, Company)
+            =>
+            does_shareholder_consent_to_the_determination_ci(CapitalIncreaseResolution, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(do_all_shareholders_consent_to_voting_in_writing_ci, axiom,
+  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
+  (
+    do_all_shareholders_consent_to_voting_in_writing_ci(CapitalIncreaseResolution)
+    <=
+    (
+      ? [Company: company] :
+      (
+        company_capitalincreaseresolution(Company, CapitalIncreaseResolution)
+      & (
+          ! [Shareholder: shareholder] :
+          (
+            shareholder_company(Shareholder, Company)
+            =>
+            does_shareholder_consent_to_voting_in_writing_ci(CapitalIncreaseResolution, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(has_capital_increase_resolution_qualified_majority, axiom,
+  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
+  (
+    has_capital_increase_resolution_qualified_majority(CapitalIncreaseResolution)
+    <=
+    (
+      do_all_shareholders_consent_to_the_determination_ci(CapitalIncreaseResolution)
+    | is_capital_increase_resolution_passed_via_voting(CapitalIncreaseResolution)
+    )
+  )
+).
+
+tff(is_capital_increase_resolution_passed_via_voting_positive, axiom,
+  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
+  (
+    is_capital_increase_resolution_passed_via_voting(CapitalIncreaseResolution)
+    <=
+    ? [Voting: voting, YesRatio: $real] :
+    (
+      capitalincreaseresolution_voting(CapitalIncreaseResolution, Voting)
+    & voting_yesratio(Voting, YesRatio)
+    & $greater(YesRatio, 0.75)
+    )
+  )
+).
+
+tff(is_capital_increase_resolution_passed_via_voting_negative, axiom,
+  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
+  (
+    ~is_capital_increase_resolution_passed_via_voting(CapitalIncreaseResolution)
+    <=
+    ? [Voting: voting, YesRatio: $real] :
+    (
+      capitalincreaseresolution_voting(CapitalIncreaseResolution, Voting)
+    & voting_yesratio(Voting, YesRatio)
+    & $lesseq(YesRatio, 0.75)
+    )
+  )
+).
+
+
+tff(is_permit_resolution_legal, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    is_permit_resolution_legal(PermitResolution)
+    <=
+    (
+      is_permit_resolution_formally_legal(PermitResolution)
+    & has_permit_resolution_majority(PermitResolution)
+    )
+  )
+).
+
+tff(is_permit_resolution_formally_legal, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    is_permit_resolution_formally_legal(PermitResolution)
+    <=
+    (
+      is_permit_resolution_with_meeting_formally_legal(PermitResolution)
+    | is_permit_resolution_without_meeting_formally_legal(PermitResolution)
+    )
+  )
+).
+
+tff(is_permit_resolution_with_meeting_formally_legal, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    is_permit_resolution_with_meeting_formally_legal(PermitResolution)
+    <=
+    ? [Meeting: meeting] :
+    (
+      permitresolution_meeting(PermitResolution, Meeting)
+    & is_meeting_legal(Meeting)
+    )
+  )
+).
+
+tff(is_permit_resolution_without_meeting_formally_legal, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    is_permit_resolution_without_meeting_formally_legal(PermitResolution)
+    <=
+    (
+      (
+        ~? [Meeting: meeting] :
+        (
+          permitresolution_meeting(PermitResolution, Meeting)
+        )
+      )
+    & (
+        do_all_shareholders_consent_to_the_determination_per(PermitResolution)
+      | do_all_shareholders_consent_to_voting_in_writing_per(PermitResolution)
+      )
+    )
+  )
+).
+
+tff(do_all_shareholders_consent_to_the_determination_per, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    do_all_shareholders_consent_to_the_determination_per(PermitResolution)
+    <=
+    (
+      ? [Application: application, CapitalIncreaseResolution: capitalincreaseresolution, Company: company] :
+      (
+        application_permitresolution(Application, PermitResolution)
+      & application_capitalincreaseresolution(Application, CapitalIncreaseResolution)
+      & company_capitalincreaseresolution(Company, CapitalIncreaseResolution)
+      & (
+          ! [Shareholder: shareholder] :
+          (
+            shareholder_company(Shareholder, Company)
+            =>
+            does_shareholder_consent_to_the_determination_per(PermitResolution, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(do_all_shareholders_consent_to_voting_in_writing_per, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    do_all_shareholders_consent_to_voting_in_writing_per(PermitResolution)
+    <=
+    (
+      ? [Application: application, CapitalIncreaseResolution: capitalincreaseresolution, Company: company] :
+      (
+        application_permitresolution(Application, PermitResolution)
+      & application_capitalincreaseresolution(Application, CapitalIncreaseResolution)
+      & company_capitalincreaseresolution(Company, CapitalIncreaseResolution)
+      & (
+          ! [Shareholder: shareholder] :
+          (
+            shareholder_company(Shareholder, Company)
+            =>
+            does_shareholder_consent_to_voting_in_writing_per(PermitResolution, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(has_permit_resolution_majority, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    has_permit_resolution_majority(PermitResolution)
+    <=
+    (
+      do_all_shareholders_consent_to_the_determination_per(PermitResolution)
+    | is_permit_resolution_passed_via_voting(PermitResolution)
+    )
+  )
+).
+
+tff(is_permit_resolution_passed_via_voting_positive, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    is_permit_resolution_passed_via_voting(PermitResolution)
+    <=
+    ? [Voting: voting, YesRatio: $real] :
+    (
+      permitresolution_voting(PermitResolution, Voting)
+    & voting_yesratio(Voting, YesRatio)
+    & $greater(YesRatio, 0.50)
+    )
+  )
+).
+
+tff(is_permit_resolution_passed_via_voting_negative, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    ~is_permit_resolution_passed_via_voting(PermitResolution)
+    <=
+    ? [Voting: voting, YesRatio: $real] :
+    (
+      permitresolution_voting(PermitResolution, Voting)
+    & voting_yesratio(Voting, YesRatio)
+    & $lesseq(YesRatio, 0.50)
+    )
+  )
+).
+
+
+tff(is_meeting_legal, axiom,
+  ! [Meeting: meeting] :
+  (
+    is_meeting_legal(Meeting)
+    <=
+    (
+      is_personal_meeting_legal(Meeting)
+    | is_teleconference_meeting_legal(Meeting)
+    )
+  )
+).
+
+tff(is_personal_meeting_legal, axiom,
+  ! [Meeting: meeting] :
+  (
+    is_personal_meeting_legal(Meeting)
+    <=
+    (
+      meeting_format(Meeting, personal)
+    )
+  )
+).
+
+tff(is_teleconference_meeting_legal, axiom,
+  ! [Meeting: meeting] :
+  (
+    is_teleconference_meeting_legal(Meeting)
+    <=
+    (
+      meeting_format(Meeting, teleconference)
+    & do_all_shareholders_consent_to_teleconference_meeting(Meeting)
+    )
+  )
+).
+
+tff(do_all_shareholders_consent_to_teleconference_meeting_ci, axiom,
+  ! [Meeting: meeting] :
+  (
+    do_all_shareholders_consent_to_teleconference_meeting(Meeting)
+    <=
+    (
+      ? [CapitalIncreaseResolution: capitalincreaseresolution, Company: company] :
+      (
+        capitalincreaseresolution_meeting(CapitalIncreaseResolution, Meeting)
+      & company_capitalincreaseresolution(Company, CapitalIncreaseResolution)
+      & (
+          ! [Shareholder: shareholder] :
+          (
+            shareholder_company(Shareholder, Company)
+            =>
+            does_shareholder_consent_to_teleconference_meeting(Meeting, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(do_all_shareholders_consent_to_teleconference_meeting_per, axiom,
+  ! [Meeting: meeting] :
+  (
+    do_all_shareholders_consent_to_teleconference_meeting(Meeting)
+    <=
+    (
+      ? [PermitResolution: permitresolution, Application: application, CapitalIncreaseResolution: capitalincreaseresolution, Company: company] :
+      (
+        permitresolution_meeting(PermitResolution, Meeting)
+      & application_permitresolution(Application, PermitResolution)
+      & application_capitalincreaseresolution(Application, CapitalIncreaseResolution)
+      & company_capitalincreaseresolution(Company, CapitalIncreaseResolution)
+      & (
+          ! [Shareholder: shareholder] :
+          (
+            shareholder_company(Shareholder, Company)
+            =>
+            does_shareholder_consent_to_teleconference_meeting(Meeting, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(voting_yesratio, axiom,
+  ! [Voting: voting, YesRatio: $real] :
+  (
+    voting_yesratio(Voting, YesRatio)
+    <=
+    ? [YesVotes: $int, NoVotes: $int] :
+    (
+      voting_yesvotes(Voting, YesVotes)
+    & voting_novotes(Voting, NoVotes)
+    & $quotient($to_real(YesVotes), $to_real($sum(YesVotes, NoVotes))) = YesRatio
+    )
+  )
+).
+
+
+tff(is_newly_joining_shareholder, axiom,
+  ! [Shareholder: shareholder, Application: application] :
+  (
+    is_newly_joining_shareholder(Shareholder, Application)
+    <=>
+    (
+      ? [Company: company, CapitalIncreaseResolution: capitalincreaseresolution, SubscriberList: subscriberlist, Subscription: subscription] :
+      (
+        ~shareholder_company(Shareholder, Company)
+      & company_capitalincreaseresolution(Company, CapitalIncreaseResolution)
+      & application_capitalincreaseresolution(Application, CapitalIncreaseResolution)
+      & application_subscriberlist(Application, SubscriberList)
+      & subscriberlist_subscription(SubscriberList, Subscription)
+      & subscription_shareholder(Subscription, Shareholder)
+      )
+    )
+  )
+).
+
+tff(are_permit_resolution_requirements_fulfilled, axiom,
+  ! [Application: application] :
+  (
+    are_permit_resolution_requirements_fulfilled(Application)
+    <=
+    (
+      there_is_no_newly_joining_shareholder(Application)
+    | is_permit_resolution_legal_and_complete(Application)
+    )
+  )
+).
+
+tff(is_permit_resolution_legal_and_complete, axiom,
+  ! [Application: application] :
+  (
+    is_permit_resolution_legal_and_complete(Application)
+    <=
+    (
+      ? [PermitResolution: permitresolution] :
+      (
+        application_permitresolution(Application, PermitResolution)
+      & are_all_newly_joining_shareholders_mentioned_in_permit_resolution(PermitResolution)
+      & is_permit_resolution_legal(PermitResolution)
+      )
+    )
+  )
+).
+
+tff(there_is_no_newly_joining_shareholder, axiom,
+  ! [Application: application] :
+  (
+    there_is_no_newly_joining_shareholder(Application)
+    <=
+    (
+      ? [CapitalIncreaseResolution: capitalincreaseresolution, SubscriberList: subscriberlist, Company: company] :
+      (
+        application_capitalincreaseresolution(Application, CapitalIncreaseResolution)
+      & company_capitalincreaseresolution(Company, CapitalIncreaseResolution)
+      & application_subscriberlist(Application, SubscriberList)
+      & (
+          ! [Subscription: subscription] :
+          (
+            subscriberlist_subscription(SubscriberList, Subscription)
+            =>
+            (
+              ? [Shareholder: shareholder] :
+              (
+                subscription_shareholder(Subscription, Shareholder)
+              & shareholder_company(Shareholder, Company)
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(are_all_newly_joining_shareholders_mentioned_in_permit_resolution, axiom,
+  ! [PermitResolution: permitresolution] :
+  (
+    are_all_newly_joining_shareholders_mentioned_in_permit_resolution(PermitResolution)
+    <=
+    (
+      ? [Application: application, SubscriberList: subscriberlist] :
+      (
+        application_permitresolution(Application, PermitResolution)
+      & application_subscriberlist(Application, SubscriberList)
+      & (
+          ! [Subscription: subscription, Shareholder: shareholder] :
+          (
+            (
+              subscriberlist_subscription(SubscriberList, Subscription)
+            & subscription_shareholder(Subscription, Shareholder)
+            & is_newly_joining_shareholder(Shareholder, Application)
+            )
+            =>
+            permitresolution_shareholder(PermitResolution, Shareholder)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(is_list_of_subscribers_attached, axiom,
+  ! [Application: application] :
+  (
+    is_list_of_subscribers_attached(Application)
+    <=
+    (
+      ? [SubscriberList: subscriberlist] :
+      (
+        application_subscriberlist(Application, SubscriberList)
+      )
+    )
+  )
+).
+
+tff(are_subscriber_declarations_legal, axiom,
+  ! [Application: application] :
+  (
+    are_subscriber_declarations_legal(Application)
+    <=
+    (
+        there_is_one_declaration_per_subscriber(Application)
+      & are_all_declarations_legal(Application)
+    )
+  )
+).
+
+tff(there_is_one_declaration_per_subscriber, axiom,
+  ! [Application: application] :
+  (
+    there_is_one_declaration_per_subscriber(Application)
+    <=
+    (
+      ? [SubscriberList: subscriberlist] :
+      (
+        application_subscriberlist(Application, SubscriberList)
+      & (
+          ! [Subscription: subscription] :
+          (
+            subscriberlist_subscription(SubscriberList, Subscription)
+            =>
+            (
+              ? [Shareholder: shareholder, Declaration: declaration] :
+              (
+                subscription_shareholder(Subscription, Shareholder)
+              & application_declaration(Application, Declaration)
+              & declaration_shareholder(Declaration, Shareholder)
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(are_all_declarations_legal, axiom,
+  ! [Application: application] :
+  (
+    are_all_declarations_legal(Application)
+    <=
+    (
+      ! [Declaration: declaration] :
+      (
+        application_declaration(Application, Declaration)
+        =>
+        (
+          is_declaration_notarized(Declaration)
+        & (
+            declaration_format(Declaration, original)
+          | declaration_format(Declaration, certifiedcopy)
+          )
+        )
+      )
+    )
+  )
+).
+
+tff(is_amended_AoA_plausible, axiom,
+  ! [AmendedAoA: amendedAoA] :
+  (
+    is_amended_AoA_plausible(AmendedAoA)
+    <=
+    (
+      is_amended_AoA_plausible_concerning_old_new_increase(AmendedAoA)
+    | is_amendedAoA_plausible_concerning_new_sum_of_nominals(AmendedAoA)
+    )
+  )
+).
+
+% ToDo: is_amended_AoA_plausible_concerning_old_new_increase is not yet implemented
+tff(is_amended_AoA_plausible_concerning_old_new_increase, axiom,
+  ! [AmendedAoA: amendedAoA] :
+  (
+    is_amended_AoA_plausible_concerning_old_new_increase(AmendedAoA)
+    <=
+    $true
+  )
+).
+
+% ToDo: is_amendedAoA_plausible_concerning_new_sum_of_nominals is not yet implemented
+tff(is_amendedAoA_plausible_concerning_new_sum_of_nominals, axiom,
+  ! [AmendedAoA: amendedAoA] :
+  (
+    is_amendedAoA_plausible_concerning_new_sum_of_nominals(AmendedAoA)
+    <=
+    $true
+  )
+).
+
+tff(do_all_directors_perform_the_application, axiom,
+  ! [Application: application] :
+  (
+    do_all_directors_perform_the_application(Application)
+    <=
+    (
+      ? [CapitalIncreaseResolution: capitalincreaseresolution, Company: company] :
+      (
+        application_capitalincreaseresolution(Application, CapitalIncreaseResolution)
+      & company_capitalincreaseresolution(Company, CapitalIncreaseResolution)
+      & (
+          ! [Director: director] :
+          (
+            director_company(Director, Company)
+            =>
+            application_applicant(Application, Director)
+          )
+        )
+      )
+    )
+  )
+).
