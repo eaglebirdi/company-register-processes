@@ -8,3 +8,6 @@ class Item:
         self.proposition = proposition
         self.necessary = necessary
         self.children = children
+
+    def __str__(self):
+        return self.label

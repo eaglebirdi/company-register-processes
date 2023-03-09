@@ -19,7 +19,7 @@ class LogicProgramsGenerator:
 
     def create(self, proof_tree: Tree, main_object: str) -> Tree:
         enriched_item = self._create_enriched_item(proof_tree.root, main_object, 0)
-        enriched_tree = Tree(proof_tree.main_object, enriched_item)
+        enriched_tree = Tree(enriched_item)
         return enriched_tree
 
     def _create_enriched_item(self, item: Item, main_object: str, lvl: int) -> EnrichedItem:
