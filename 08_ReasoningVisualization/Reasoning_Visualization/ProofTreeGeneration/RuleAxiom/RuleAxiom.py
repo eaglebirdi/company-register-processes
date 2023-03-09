@@ -16,3 +16,6 @@ class RuleAxiom:
         self.existential_variables = existential_variables
         self.rule_operands = rule_operands
         self.relation_operands = relation_operands
+
+    def __str__(self):
+        return self.predicate_name + "(...)"

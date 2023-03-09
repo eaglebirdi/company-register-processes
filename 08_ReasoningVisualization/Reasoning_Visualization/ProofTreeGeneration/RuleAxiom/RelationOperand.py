@@ -6,3 +6,6 @@ class RelationOperand:
         self.predicate_name = predicate_name
         self.argument1 = argument1
         self.argument2 = argument2
+
+    def __str__(self):
+        return self.predicate_name + "(" + self.argument1.variable_name + ", " + self.argument2.variable_name + ")"
