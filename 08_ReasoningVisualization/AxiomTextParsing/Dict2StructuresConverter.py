@@ -117,6 +117,18 @@ class Dict2StructuresConverter:
         elif name == 'Real':
             assert_length(args, 3)
             return Real(int(args[0]['_name']), int(args[1]['_name']), int(args[2]['_name']))
+        elif name == 'Typing':
+            assert_length(args, 2)
+            return Typing(
+                self._extract_string(args[0]),
+                self._parse_inner(args[1])
+            )
+        elif name == 'MappingType':
+            assert_length(args, 2)
+            return MappingType(
+                self._parse_inner(args[0]),
+                self._parse_inner(args[1])
+            )
         else:
             raise Exception("not yet implemented: " + name)
 

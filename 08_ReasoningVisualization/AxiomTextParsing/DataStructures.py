@@ -164,3 +164,17 @@ class NumberTerm(Formula):
     def __init__(self, value: Number):
         super().__init__()
         self.pretty = value.pretty
+
+
+class Typing(Statement):
+    def __init__(self, atom: str, typ: Type):
+        super().__init__()
+        self.atom = atom
+        self.typ = typ
+
+
+class MappingType(Type):
+    def __init__(self, left: List[Type], right: Type):
+        super().__init__()
+        self.left = left
+        self.right = right
