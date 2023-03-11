@@ -49,7 +49,7 @@ class LogicProgramsGenerator:
         conjecture = conjecture[0:-1] + " & " + variable + " = " + main_object + ")"
 
         tptp_program = copy.deepcopy(self.tptp_program)
-        tptp_program.main_program.content += newline + newline + conjecture
+        tptp_program.main_program.content += newline + newline + "tff(tiq, conjecture, " + conjecture + ")."
 
         return tptp_program
 
