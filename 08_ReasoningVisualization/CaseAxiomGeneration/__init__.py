@@ -3,4 +3,3 @@ from .A115_CompanyDissolution.Generator import Generator as A115_CompanyDissolut
 from .A108_CapitalIncrease.Generator import Generator as A108_CapitalIncrease_Generator
 
 from .GenerationResult import GenerationResult
-from .FileResult import FileResult

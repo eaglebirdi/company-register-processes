@@ -1,8 +1,8 @@
 from typing import List
+from Reasoning_Visualization import NamedFile
 from ..Configuration import Configuration
 from ..IGenerator import IGenerator
 from ..GenerationResult import GenerationResult
-from ..FileResult import FileResult
 from ..Helpers.CaseFactHelper import *
 from ..Helpers.InstanceHelper import *
 from ..Helpers.GeneralHelper import is_empty
@@ -19,8 +19,8 @@ class Generator(IGenerator):
         self._validate(input_data, __file__)
 
         axiom_files = [
-            FileResult("instances.ax", self._create_instances_axioms(input_data)),
-            FileResult("casefacts.ax", self._create_casefacts_axioms(input_data))
+            NamedFile("instances.ax", self._create_instances_axioms(input_data)),
+            NamedFile("casefacts.ax", self._create_casefacts_axioms(input_data))
         ]
         main_object_name = self._get_main_object_name(root_rule)
 

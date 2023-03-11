@@ -1,10 +1,10 @@
 from typing import List
-from .FileResult import FileResult
+from Reasoning_Visualization import NamedFile
 
 
 class GenerationResult:
     def __init__(self,
-                 axiom_files: List[FileResult],
+                 axiom_files: List[NamedFile],
                  main_object: str, main_predicate: str):
         self.axiom_files = axiom_files
         self.main_object = main_object

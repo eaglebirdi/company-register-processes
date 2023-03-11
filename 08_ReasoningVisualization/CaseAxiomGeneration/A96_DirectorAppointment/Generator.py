@@ -1,8 +1,8 @@
 from typing import List
+from Reasoning_Visualization import NamedFile
 from ..Configuration import Configuration
 from ..IGenerator import IGenerator
 from ..GenerationResult import GenerationResult
-from ..FileResult import FileResult
 from ..Helpers.CaseFactHelper import *
 from ..Helpers.InstanceHelper import *
 from ..Helpers.GeneralHelper import is_empty
@@ -19,8 +19,8 @@ class Generator(IGenerator):
         self._validate(input_data, __file__)
 
         axiom_files = [
-            FileResult("instances.ax", self._create_instances_axioms(input_data)),
-            FileResult("casefacts.ax", self._create_casefacts_axioms(input_data))
+            NamedFile("instances.ax", self._create_instances_axioms(input_data)),
+            NamedFile("casefacts.ax", self._create_casefacts_axioms(input_data))
         ]
         main_object_name = self._get_main_object_name(root_rule)
 
@@ -138,10 +138,10 @@ class Generator(IGenerator):
 
         result += newline
 
-        consents_to_teleconference = meeting.get('consent_to_teleconference')
+        consents_to_teleconference = meeting.get('consents_to_teleconference')
         if consents_to_teleconference is None:
             consents_to_teleconference = []
-        result += create_casefact_declaration_binary("does_shareholder_consent_to_teleconference_meeting", "meeting", "shareholder", [(get_cname_voting(), get_cname_shareholder(x)) for x in consents_to_teleconference])
+        result += create_casefact_declaration_binary("does_shareholder_consent_to_teleconference_meeting", "meeting", "shareholder", [(get_cname_meeting(), get_cname_shareholder(x)) for x in consents_to_teleconference])
 
         written_consents = resolution.get('written_consents')
         if written_consents is None:
