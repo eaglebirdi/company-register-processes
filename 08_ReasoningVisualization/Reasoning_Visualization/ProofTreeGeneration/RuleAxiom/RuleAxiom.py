@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 from .TypedVariable import TypedVariable
 from .RuleOperand import RuleOperand
 from .RelationOperand import RelationOperand
@@ -16,6 +16,13 @@ class RuleAxiom:
         self.existential_variables = existential_variables
         self.rule_operands = rule_operands
         self.relation_operands = relation_operands
+
+    def get_rule_operand(self, predicate_name: str) -> Union[RuleOperand, None]:
+        matches = [x for x in self.rule_operands if x.predicate_name == predicate_name]
+        if len(matches) == 0:
+            return None
+        else:
+            return matches[0]
 
     def __str__(self):
         return self.predicate_name + "(...)"

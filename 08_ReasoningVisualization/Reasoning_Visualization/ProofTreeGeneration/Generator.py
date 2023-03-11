@@ -1,5 +1,6 @@
 from typing import List, Union
 from .RuleAxiomExaminer import RuleAxiomExaminer
+from .ConjectureGenerator import ConjectureGenerator
 from .ContextInfo import ContextInfo
 from .RuleAxiom.RuleAxiom import RuleAxiom
 from .RuleAxiom.RuleOperand import RuleOperand
@@ -32,7 +33,7 @@ class Generator:
         else:
             children = self._inner_rule(rule_axiom, lvl)
 
-        conjecture = ""  # ToDo conjecture construction
+        conjecture = self._create_proposition(rule_operand)
         necessary = True if self.context.is_empty() else not self.context.top().is_disjunction
 
         result = Item(rule_operand.predicate_name, conjecture, necessary, children)
@@ -57,9 +58,14 @@ class Generator:
 
         return children
 
-    def _create_root_operand(self, root_rule: str):
+    def _create_root_operand(self, root_rule: str) -> RuleOperand:
         root_rule_axiom = self.rule_axioms.get(root_rule)
         if root_rule_axiom is None:
             raise Exception("There is no valid rule called '" + root_rule + "'.")
 
         return RuleOperand(root_rule_axiom.predicate_name, root_rule_axiom.universal_variable)
+
+    def _create_proposition(self, rule_operand: RuleOperand) -> str:
+        conjecture_generator = ConjectureGenerator(self.context)
+        result = conjecture_generator.generate(rule_operand)
+        return result
