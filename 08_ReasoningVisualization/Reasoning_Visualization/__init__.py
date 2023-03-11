@@ -4,8 +4,10 @@ from .TPTPProgram import TPTPProgram
 
 from .ProofTreeGeneration.Generator import Generator as ProofTreeGenerator
 from .LogicProgramsGenerator import LogicProgramsGenerator
-from .ProverInvoker import ProverInvoker
 from .ProofVisualizer import ProofVisualizer
+
+from .ProverInvocation.ProverInvoker import ProverInvoker
+from .ProverInvocation.ProofTreeProverInvoker import ProofTreeProverInvoker
 
 from .ProofTreeGeneration.ProofTree.Tree import Tree
 from .ProofTreeGeneration.ProofTree.Item import Item

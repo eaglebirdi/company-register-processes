@@ -1,26 +1,30 @@
 import os
 import shutil
 import uuid
-from .TPTPProgram import TPTPProgram
-from .ProverTools.IProverTool import IProverTool
-from .ProverTools.ProverResult import ProverResult
+from ..TPTPProgram import TPTPProgram
+from ..ProverTools.IProverTool import IProverTool
+from ..ProverTools.ProverResult import ProverResult
 
 
 class ProverInvoker:
-    def __init__(self, tptp_program: TPTPProgram):
-        self.tptp_program = tptp_program
+    """
+    Logic for invoking the prover tool and organizing the file system accesses.
+    """
 
-    def execute(self, prover_tool: IProverTool) -> ProverResult:
+    def __init__(self, prover_tool: IProverTool):
+        self.prover_tool = prover_tool
+
+    def execute(self, tptp_program: TPTPProgram) -> ProverResult:
         program_id = self._create_program_id()
         folder_path = self._create_program_folder(program_id)
 
-        for axiom_file in self.tptp_program.additional_files:
+        for axiom_file in tptp_program.additional_files:
             self._write_file(folder_path, axiom_file.name, axiom_file.content)
 
-        main_program = self.tptp_program.main_program
+        main_program = tptp_program.main_program
         main_program_path = self._write_file(folder_path, main_program.name, main_program.content)
 
-        result = prover_tool.execute(main_program_path)
+        result = self.prover_tool.execute(main_program_path)
 
         self._delete_program_folder(folder_path)
 
