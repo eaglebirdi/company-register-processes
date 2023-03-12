@@ -2,6 +2,8 @@ from .AxiomMerging.AxiomMerger import AxiomMerger
 from .NamedFile import NamedFile
 from .TPTPProgram import TPTPProgram
 
+from .Executor import Executor
+
 from .ProofTreeGeneration.Generator import Generator as ProofTreeGenerator
 from .LogicProgramsGenerator import LogicProgramsGenerator
 from .ProofVisualizer import ProofVisualizer

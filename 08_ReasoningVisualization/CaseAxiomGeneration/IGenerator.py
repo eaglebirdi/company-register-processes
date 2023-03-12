@@ -1,12 +1,17 @@
 import os
 from abc import ABC
+from .Configuration import Configuration
 from .DataValidator import DataValidator
 from .GenerationResult import GenerationResult
+from .Helpers.CaseFactHelper import CaseFactHelper
+from .Helpers.InstanceHelper import InstanceHelper
 
 
 class IGenerator(ABC):
-    def __init__(self):
-        pass
+    def __init__(self, configuration: Configuration):
+        self.configuration = configuration
+        self.fact_helper = CaseFactHelper(configuration.reassert_predicate_completion)
+        self.inst_helper = InstanceHelper(configuration.reassert_predicate_completion)
 
     """
     Generates the TPTP axiom files and other data for the given input data.
