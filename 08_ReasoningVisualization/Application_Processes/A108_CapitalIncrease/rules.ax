@@ -140,34 +140,6 @@ tff(has_capital_increase_resolution_qualified_majority, axiom,
   )
 ).
 
-tff(is_capital_increase_resolution_passed_via_voting_positive, axiom,
-  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
-  (
-    is_capital_increase_resolution_passed_via_voting(CapitalIncreaseResolution)
-    <=
-    ? [Voting: voting, YesRatio: $real] :
-    (
-      capitalincreaseresolution_voting(CapitalIncreaseResolution, Voting)
-    & voting_yesratio(Voting, YesRatio)
-    & $greater(YesRatio, 0.75)
-    )
-  )
-).
-
-tff(is_capital_increase_resolution_passed_via_voting_negative, axiom,
-  ! [CapitalIncreaseResolution: capitalincreaseresolution] :
-  (
-    ~is_capital_increase_resolution_passed_via_voting(CapitalIncreaseResolution)
-    <=
-    ? [Voting: voting, YesRatio: $real] :
-    (
-      capitalincreaseresolution_voting(CapitalIncreaseResolution, Voting)
-    & voting_yesratio(Voting, YesRatio)
-    & $lesseq(YesRatio, 0.75)
-    )
-  )
-).
-
 
 tff(is_permit_resolution_legal, axiom,
   ! [PermitResolution: permitresolution] :
@@ -286,34 +258,6 @@ tff(has_permit_resolution_majority, axiom,
   )
 ).
 
-tff(is_permit_resolution_passed_via_voting_positive, axiom,
-  ! [PermitResolution: permitresolution] :
-  (
-    is_permit_resolution_passed_via_voting(PermitResolution)
-    <=
-    ? [Voting: voting, YesRatio: $real] :
-    (
-      permitresolution_voting(PermitResolution, Voting)
-    & voting_yesratio(Voting, YesRatio)
-    & $greater(YesRatio, 0.50)
-    )
-  )
-).
-
-tff(is_permit_resolution_passed_via_voting_negative, axiom,
-  ! [PermitResolution: permitresolution] :
-  (
-    ~is_permit_resolution_passed_via_voting(PermitResolution)
-    <=
-    ? [Voting: voting, YesRatio: $real] :
-    (
-      permitresolution_voting(PermitResolution, Voting)
-    & voting_yesratio(Voting, YesRatio)
-    & $lesseq(YesRatio, 0.50)
-    )
-  )
-).
-
 
 tff(is_meeting_legal, axiom,
   ! [Meeting: meeting] :
@@ -394,20 +338,6 @@ tff(do_all_shareholders_consent_to_teleconference_meeting_per, axiom,
           )
         )
       )
-    )
-  )
-).
-
-tff(voting_yesratio, axiom,
-  ! [Voting: voting, YesRatio: $real] :
-  (
-    voting_yesratio(Voting, YesRatio)
-    <=
-    ? [YesVotes: $int, NoVotes: $int] :
-    (
-      voting_yesvotes(Voting, YesVotes)
-    & voting_novotes(Voting, NoVotes)
-    & $quotient($to_real(YesVotes), $to_real($sum(YesVotes, NoVotes))) = YesRatio
     )
   )
 ).

@@ -184,7 +184,7 @@ class Generator(IGenerator):
 
         raise Exception("no implementation provided for root rule " + root_rule)
 
-    def _create_precomputed_majority_axiom(self, yes_votes: Union[str, None], no_votes: Union[str, None], majorityrequirement: Union[str, None]):
+    def _create_precomputed_majority_axiom(self, yes_votes: Union[str, None], no_votes: Union[str, None], majorityrequirement: Union[str, None]) -> str:
         if yes_votes is None or no_votes is None:
             raise Exception("Arithmetic precompution cannot be performed due to lack of data.")
 
