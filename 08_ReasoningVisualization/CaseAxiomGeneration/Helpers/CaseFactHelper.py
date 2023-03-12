@@ -1,4 +1,5 @@
 from typing import List, Tuple
+import re
 from ..Configuration import Configuration
 from .GeneralHelper import get_variable_name_for_sort
 
@@ -8,6 +9,11 @@ newline = Configuration.newline
 class CaseFactHelper:
     def __init__(self, reassert_predicate_completion: bool):
         self.reassert_predicate_completion = reassert_predicate_completion
+
+    @staticmethod
+    def normalize(name):
+        res = re.sub(r'\W+', '', name)
+        return res
 
     def create_casefact_declaration_binary(self, predicate_name: str, sort1: str, sort2: str,
                                            instances: List[Tuple[str, str]]) -> str:
@@ -147,4 +153,20 @@ class CaseFactHelper:
                 result += "$true => " + predicate_name + "(" + instance1 + ", " + x + ")"
                 result += ")." + newline
 
+        return result
+
+    def create_nonpredcompl_casefact_monadic(self, predicate_name: str, instance: str, negated: bool) -> str:
+        result = ""
+        negator = "~" if negated else ""
+        result += "tff(fact_" + predicate_name + "_" + self.normalize(instance) + ", axiom, "
+        result += "$true => " + negator + predicate_name + "(" + instance + ")"
+        result += ")." + newline
+        return result
+
+    def create_nonpredcompl_casefact_binary(self, predicate_name: str, instance1: str, instance2: str, negated: bool) -> str:
+        result = ""
+        negator = "~" if negated else ""
+        result += "tff(fact_" + predicate_name + "_" + self.normalize(instance1) + "_" + self.normalize(instance2) + ", axiom, "
+        result += "$true => " + negator + predicate_name + "(" + instance1 + ", " + instance2 + ")"
+        result += ")." + newline
         return result

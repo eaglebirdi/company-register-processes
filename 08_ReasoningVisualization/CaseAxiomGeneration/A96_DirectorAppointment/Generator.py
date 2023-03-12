@@ -10,6 +10,10 @@ newline = Configuration.newline
 
 
 class Generator(IGenerator):
+    """
+    Logic for creating the case-related axioms for A96: LLC Director Appointment
+    """
+
     def __init__(self, configuration: Configuration):
         super().__init__(configuration)
 
@@ -93,17 +97,20 @@ class Generator(IGenerator):
         result += self.fact_helper.create_casefact_declaration_binary("company_representationpower", "company", "representationpower", [(cname_company, company['representationpower'])])
 
         majorityrequirement = company.get('majorityrequirement')
-        if majorityrequirement is None:
-            company_majreqs = []
-        else:
-            company_majreqs = [(cname_company, str(majorityrequirement))]
-        result += self.fact_helper.create_casefact_declaration_binary("company_majorityrequirement_AoA", "company", "$real", company_majreqs)
+        if not self.configuration.precompute_arithmetics:
+            if majorityrequirement is None:
+                company_majreqs = []
+            else:
+                company_majreqs = [(cname_company, str(majorityrequirement))]
+            result += self.fact_helper.create_casefact_declaration_binary("company_majorityrequirement_AoA", "company", "$real", company_majreqs)
 
         result += newline
 
         result += self.fact_helper.create_casefact_declaration_binary("shareholder_company", "shareholder", "company", [(get_cname_shareholder(x), cname_company) for x in shareholders])
         result += self.fact_helper.create_casefact_declaration_binary("shareholder_person", "shareholder", "person", [(get_cname_shareholder(x), get_cname_person(x)) for x in shareholders])
-        result += self.fact_helper.create_casefact_declaration_binary("shareholder_votes", "shareholder", "$int", [(get_cname_shareholder(x), str(x['votes'])) for x in shareholders])
+
+        if not self.configuration.precompute_arithmetics:
+            result += self.fact_helper.create_casefact_declaration_binary("shareholder_votes", "shareholder", "$int", [(get_cname_shareholder(x), str(x['votes'])) for x in shareholders])
 
         result += newline
 
@@ -127,12 +134,15 @@ class Generator(IGenerator):
 
         cname_voting = get_cname_voting()
 
-        if yes_votes is not None:
-            result += self.fact_helper.create_casefact_declaration_binary("voting_yesvotes", "voting", "$int", [(cname_voting, str(yes_votes))])
-        if no_votes is not None:
-            result += self.fact_helper.create_casefact_declaration_binary("voting_novotes", "voting", "$int", [(cname_voting, str(no_votes))])
-        if abstentions is not None:
-            result += self.fact_helper.create_casefact_declaration_binary("voting_abstentions", "voting", "$int", [(cname_voting, str(abstentions))])
+        if self.configuration.precompute_arithmetics:
+            result += self._create_precomputed_majority_axiom(yes_votes, no_votes, majorityrequirement)
+        else:
+            if yes_votes is not None:
+                result += self.fact_helper.create_casefact_declaration_binary("voting_yesvotes", "voting", "$int", [(cname_voting, str(yes_votes))])
+            if no_votes is not None:
+                result += self.fact_helper.create_casefact_declaration_binary("voting_novotes", "voting", "$int", [(cname_voting, str(no_votes))])
+            if abstentions is not None:
+                result += self.fact_helper.create_casefact_declaration_binary("voting_abstentions", "voting", "$int", [(cname_voting, str(abstentions))])
 
         result += newline
 
@@ -173,6 +183,24 @@ class Generator(IGenerator):
             return get_cname_application()
 
         raise Exception("no implementation provided for root rule " + root_rule)
+
+    def _create_precomputed_majority_axiom(self, yes_votes: Union[str, None], no_votes: Union[str, None], majorityrequirement: Union[str, None]):
+        if yes_votes is None or no_votes is None:
+            raise Exception("Arithmetic precompution cannot be performed due to lack of data.")
+
+        yes_votes_int = int(yes_votes)
+        no_votes_int = int(no_votes)
+
+        # ToDo: better extract this from the default rule
+        majreq = float(majorityrequirement) if majorityrequirement is not None else 0.5
+        yes_ratio = yes_votes_int / (yes_votes_int + no_votes_int)
+        is_majority = yes_ratio > majreq
+
+        cname_res = get_cname_resolution()
+        result = "% precomputed resolution majority: "
+        result += "{:6.4f}".format(yes_ratio) + " > " + "{:6.4f}".format(majreq) + "?" + newline
+        result += self.fact_helper.create_nonpredcompl_casefact_monadic("is_resolution_passed_via_voting", cname_res, not is_majority)
+        return result
 
     def _get_all_persons_cnames(self, shareholders, directors, new_director) -> List[str]:
         names = []

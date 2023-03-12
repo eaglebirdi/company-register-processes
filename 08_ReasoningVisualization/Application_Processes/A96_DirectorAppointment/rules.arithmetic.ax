@@ -1,0 +1,60 @@
+tff(is_resolution_passed_via_voting_positive, axiom,
+  ! [Resolution: resolution] :
+  (
+    is_resolution_passed_via_voting(Resolution)
+    <=
+    ? [Voting: voting, Company: company, MajReq: $real, YesRatio: $real] :
+    (
+      resolution_voting(Resolution, Voting)
+    & company_resolution(Company, Resolution)
+    & company_majorityrequirement(Company, MajReq)
+    & voting_yesratio(Voting, YesRatio)
+    & $greater(YesRatio, MajReq)
+    )
+  )
+).
+
+tff(is_resolution_passed_via_voting_negative, axiom,
+  ! [Resolution: resolution] :
+  (
+    ~is_resolution_passed_via_voting(Resolution)
+    <=
+    ? [Voting: voting, Company: company, MajReq: $real, YesRatio: $real] :
+    (
+      resolution_voting(Resolution, Voting)
+    & company_resolution(Company, Resolution)
+    & company_majorityrequirement(Company, MajReq)
+    & voting_yesratio(Voting, YesRatio)
+    & $lesseq(YesRatio, MajReq)
+    )
+  )
+).
+
+tff(voting_yesratio, axiom,
+  ! [Voting: voting, YesRatio: $real] :
+  (
+    voting_yesratio(Voting, YesRatio)
+    <=
+    ? [YesVotes: $int, NoVotes: $int] :
+    (
+      voting_yesvotes(Voting, YesVotes)
+    & voting_novotes(Voting, NoVotes)
+    & $quotient($to_real(YesVotes), $to_real($sum(YesVotes, NoVotes))) = YesRatio
+    )
+  )
+).
+
+tff(company_majorityrequirement, axiom,
+  ! [Company: company, MajReq: $real] :
+  (
+    company_majorityrequirement(Company, MajReq)
+    <=>
+    (
+      company_majorityrequirement_AoA(Company, MajReq)
+    | (
+        ~? [X: $real] : (company_majorityrequirement_AoA(Company, X))
+      & MajReq = 0.50
+      )
+    )
+  )
+).
