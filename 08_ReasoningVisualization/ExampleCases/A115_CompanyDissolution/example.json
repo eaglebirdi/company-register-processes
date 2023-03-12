@@ -1,0 +1,41 @@
+{
+  "company": {
+    "shareholders": [
+      { "name": "alice", "votes": 50001 },
+      { "name": "ben", "votes": 39999 },
+      { "name": "chris", "votes": 10000 }
+    ],
+    "directors": [
+      { "name": "jacob", "representationpower": "", "exemption181": false },
+      { "name": "kate", "representationpower": "modified", "exemption181": false },
+      { "name": "chris", "representationpower": "sole", "exemption181": true }
+    ],
+    "representationpower": "joint",
+    "has_expiration_date": false,
+    "liquidators": null
+  },
+  "resolution": {
+    "liquidators": [
+      { "name": "jacob", "representationpower": "" },
+      { "name": "kate", "representationpower": "" }
+    ],
+    "meeting": {
+      "occurred": true,
+      "format": "personal",
+      "consents_to_teleconference": [ "alice", "ben", "chris" ]
+    },
+    "voting": {
+      "yes_votes": 90001,
+      "no_votes": 10000,
+      "abstentions": 0
+    },
+    "written_consents": null,
+    "consents_to_voting_in_writing": null,
+    "notarized": false
+  },
+  "application": {
+    "assurance_signers": [ "jacob", "kate" ],
+    "deed_format": "certifiedcopy",
+    "applicants": [ "jacob", "kate" ]
+  }
+}

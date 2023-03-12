@@ -1,0 +1,64 @@
+{
+  "company": {
+    "shareholders": [
+      { "name": "alice", "votes": 50001 },
+      { "name": "ben", "votes": 39999 },
+      { "name": "chris", "votes": 10000 }
+    ],
+    "directors": [
+      { "name": "jacob" },
+      { "name": "kate" },
+      { "name": "chris" }
+    ]
+  },
+  "capital_increase_resolution": {
+    "meeting": {
+      "occurred": true,
+      "format": "teleconference",
+      "consents_to_teleconference": [ "alice", "ben", "chris" ]
+    },
+    "voting": {
+      "yes_votes": 90001,
+      "no_votes": 10000,
+      "abstentions": 0
+    },
+    "written_consents": null,
+    "consents_to_voting_in_writing": null,
+    "notarized": true
+  },
+  "permit_resolution": {
+    "admitted_shareholders": [ "dana" ],
+    "meeting": {
+      "occurred": true,
+      "format": "personal",
+      "consents_to_teleconference": [ "alice", "ben", "chris" ]
+    },
+    "voting": {
+      "yes_votes": 90001,
+      "no_votes": 10000,
+      "abstentions": 0
+    },
+    "written_consents": null,
+    "consents_to_voting_in_writing": null
+  },
+  "application": {
+    "contains_AoA_full_text": true,
+    "amended_AoA": {
+      "matches_notarily_certified": true,
+      "former_capital": 100000,
+      "increase": 30000,
+      "new_capital": 130000
+    },
+    "has_increased_capital_been_covered": true,
+    "assurance_signed": true,
+    "subscriber_list": [
+      { "name": "alice", "shares": 10000 },
+      { "name": "dana", "shares": 20000 }
+    ],
+    "declarations": [
+      { "signer": "alice", "format": "original", "notarized": true },
+      { "signer": "dana", "format": "original", "notarized": true }
+    ],
+    "applicants": [ "jacob", "kate", "chris" ]
+  }
+}
