@@ -22,4 +22,4 @@ class ApplicationProcessImplementation:
 
     def _get_package_folder_path(self) -> str:
         this_path = os.path.dirname(__file__)
-        return os.path.join(this_path, "Application_Processes", self.combined_key)
+        return os.path.join(this_path, "ApplicationProcesses", self.combined_key)

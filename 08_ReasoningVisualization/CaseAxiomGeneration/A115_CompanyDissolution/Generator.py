@@ -1,5 +1,5 @@
 from typing import List
-from Reasoning_Visualization import NamedFile
+from ReasoningVisualization import NamedFile
 from ..Configuration import Configuration
 from ..IGenerator import IGenerator
 from ..GenerationResult import GenerationResult

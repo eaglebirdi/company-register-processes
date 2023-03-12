@@ -1,9 +1,9 @@
 from typing import List
 import argparse
 import os
-from Reasoning_Visualization import Executor, ApplicationProcess
-from Reasoning_Visualization import InputData, NamedFile
-from Reasoning_Visualization import IProverTool, Cvc5Prover, KorovinProver, Leo3Prover, PrincessProver, VampireProver
+from ReasoningVisualization import Executor, ApplicationProcess
+from ReasoningVisualization import InputData, NamedFile
+from ReasoningVisualization import IProverTool, Cvc5Prover, KorovinProver, Leo3Prover, PrincessProver, VampireProver
 
 
 def get_prover_tool(name: str, timeout: int) -> IProverTool:
