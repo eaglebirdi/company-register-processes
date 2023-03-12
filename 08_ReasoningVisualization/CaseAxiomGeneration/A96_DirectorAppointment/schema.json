@@ -52,8 +52,7 @@
       },
       "required": [
         "new_director",
-        "meeting",
-        "voting"
+        "meeting"
       ],
       "additionalProperties": false
     },

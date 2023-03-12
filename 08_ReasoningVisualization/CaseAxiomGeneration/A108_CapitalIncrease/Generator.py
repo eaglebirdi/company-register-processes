@@ -296,10 +296,11 @@ class Generator(IGenerator):
     def _create_precomputed_majority_axioms(self, ci_voting: dict, per_voting: dict) -> str:
         result = ""
 
-        ci_yes_votes = ci_voting.get('yes_votes')
-        ci_no_votes = ci_voting.get('no_votes')
-        ci_majreq = 0.75  # ToDo: better extract majority requirement from the rules
-        result += self._create_precomputed_majority_axiom("is_capital_increase_resolution_passed_via_voting", get_cname_ci_resolution(), ci_majreq, ci_yes_votes, ci_no_votes)
+        if ci_voting is not None:
+            ci_yes_votes = ci_voting.get('yes_votes')
+            ci_no_votes = ci_voting.get('no_votes')
+            ci_majreq = 0.75  # ToDo: better extract majority requirement from the rules
+            result += self._create_precomputed_majority_axiom("is_capital_increase_resolution_passed_via_voting", get_cname_ci_resolution(), ci_majreq, ci_yes_votes, ci_no_votes)
 
         if per_voting is not None:
             per_yes_votes = per_voting.get('yes_votes')
@@ -311,7 +312,7 @@ class Generator(IGenerator):
 
     def _create_precomputed_majority_axiom(self, predicate_name: str, cname_resolution: str, majreq: float, yes_votes: str, no_votes: str):
         if yes_votes is None or no_votes is None:
-            raise Exception("Arithmetic precompution cannot be performed due to lack of data.")
+            return ""
 
         yes_votes_int = int(yes_votes)
         no_votes_int = int(no_votes)

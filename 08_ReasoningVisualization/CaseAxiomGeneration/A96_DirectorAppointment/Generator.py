@@ -127,24 +127,26 @@ class Generator(IGenerator):
 
         result += newline
 
-        voting = resolution['voting']
-        yes_votes = voting.get('yes_votes')
-        no_votes = voting.get('no_votes')
-        abstentions = voting.get('abstentions')
+        voting = resolution.get('voting')
 
-        cname_voting = get_cname_voting()
+        if voting is not None:
+            yes_votes = voting.get('yes_votes')
+            no_votes = voting.get('no_votes')
+            abstentions = voting.get('abstentions')
+    
+            cname_voting = get_cname_voting()
 
-        if self.configuration.precompute_arithmetics:
-            result += self._create_precomputed_majority_axiom(yes_votes, no_votes, majorityrequirement)
-        else:
-            if yes_votes is not None:
-                result += self.fact_helper.create_casefact_declaration_binary("voting_yesvotes", "voting", "$int", [(cname_voting, str(yes_votes))])
-            if no_votes is not None:
-                result += self.fact_helper.create_casefact_declaration_binary("voting_novotes", "voting", "$int", [(cname_voting, str(no_votes))])
-            if abstentions is not None:
-                result += self.fact_helper.create_casefact_declaration_binary("voting_abstentions", "voting", "$int", [(cname_voting, str(abstentions))])
+            if self.configuration.precompute_arithmetics:
+                result += self._create_precomputed_majority_axiom(yes_votes, no_votes, majorityrequirement)
+            else:
+                if yes_votes is not None:
+                    result += self.fact_helper.create_casefact_declaration_binary("voting_yesvotes", "voting", "$int", [(cname_voting, str(yes_votes))])
+                if no_votes is not None:
+                    result += self.fact_helper.create_casefact_declaration_binary("voting_novotes", "voting", "$int", [(cname_voting, str(no_votes))])
+                if abstentions is not None:
+                    result += self.fact_helper.create_casefact_declaration_binary("voting_abstentions", "voting", "$int", [(cname_voting, str(abstentions))])
 
-        result += newline
+            result += newline
 
         consents_to_teleconference = meeting.get('consents_to_teleconference')
         if consents_to_teleconference is None:
