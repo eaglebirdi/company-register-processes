@@ -3,8 +3,7 @@ from .RuleAxiom.RuleAxiom import RuleAxiom
 
 
 class ContextInfo:
-    def __init__(self, main_type: str):
-        self.main_type = main_type  # ToDo necessary?
+    def __init__(self):
         self.layers: List[RuleAxiom] = []
 
     def push(self, layer: RuleAxiom):

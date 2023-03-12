@@ -17,7 +17,7 @@ class Generator:
 
     def generate(self, root_rule: str) -> Tree:
         root_operand = self._create_root_operand(root_rule)
-        self.context = ContextInfo(root_operand.argument.variable_type)
+        self.context = ContextInfo()
         root_item = self._inner_operand(root_operand, 0)
         self.context = None
         return Tree(root_item)

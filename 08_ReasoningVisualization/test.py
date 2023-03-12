@@ -73,6 +73,7 @@ def main():
 '''
 Exemplary command line arguments:
 --process A96 --prover cvc5 --reassert_predicate_completion ./case_data.json
+--process A96 --prover vampire --precompute_arithmetics ./case_data.json
 '''
 
 if __name__ == '__main__':
