@@ -4,6 +4,7 @@ import uuid
 from ..TPTPProgram import TPTPProgram
 from ..ProverTools.IProverTool import IProverTool
 from ..ProverTools.ProverResult import ProverResult
+from ..ProverTools.ProverResultType import ProverResultType
 
 
 class ProverInvoker:
@@ -25,6 +26,9 @@ class ProverInvoker:
         main_program_path = self._write_file(folder_path, main_program.name, main_program.content)
 
         result = self.prover_tool.execute(main_program_path)
+
+        if result.result_type not in [ProverResultType.VALID, ProverResultType.FALSIFIABLE]:
+            print(str(result.result_type) + ": " + result.full_output)
 
         self._delete_program_folder(folder_path)
 

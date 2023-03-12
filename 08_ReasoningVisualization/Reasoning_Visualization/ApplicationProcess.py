@@ -6,8 +6,8 @@ from .NamedFile import NamedFile
 
 
 class ApplicationProcess:
-    metadata_filename = "./metadata"
-    axioms_folder = "./axioms"
+    metadata_filename = "metadata"
+    axioms_folder = "axioms"
 
     def __init__(self, axiom_files: List[NamedFile]):
         self.axiom_files = axiom_files
