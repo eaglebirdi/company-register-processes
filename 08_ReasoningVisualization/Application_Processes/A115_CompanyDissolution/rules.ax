@@ -191,48 +191,6 @@ tff(has_resolution_qualified_majority, axiom,
   )
 ).
 
-tff(is_resolution_passed_via_voting_positive, axiom,
-  ! [Resolution: resolution] :
-  (
-    is_resolution_passed_via_voting(Resolution)
-    <=
-    ? [Voting: voting, YesRatio: $real] :
-    (
-      resolution_voting(Resolution, Voting)
-    & voting_yesratio(Voting, YesRatio)
-    & $greater(YesRatio, 0.75)
-    )
-  )
-).
-
-tff(is_resolution_passed_via_voting_negative, axiom,
-  ! [Resolution: resolution] :
-  (
-    ~is_resolution_passed_via_voting(Resolution)
-    <=
-    ? [Voting: voting, YesRatio: $real] :
-    (
-      resolution_voting(Resolution, Voting)
-    & voting_yesratio(Voting, YesRatio)
-    & $lesseq(YesRatio, 0.75)
-    )
-  )
-).
-
-tff(voting_yesratio, axiom,
-  ! [Voting: voting, YesRatio: $real] :
-  (
-    voting_yesratio(Voting, YesRatio)
-    <=
-    ? [YesVotes: $int, NoVotes: $int] :
-    (
-      voting_yesvotes(Voting, YesVotes)
-    & voting_novotes(Voting, NoVotes)
-    & $quotient($to_real(YesVotes), $to_real($sum(YesVotes, NoVotes))) = YesRatio
-    )
-  )
-).
-
 tff(is_resolution_notarized_if_AoA_are_amended, axiom,
   ! [Resolution: resolution] :
   (
