@@ -1,3 +1,3 @@
 include('included.ax').
-tff(a01, axiom, $true => is_legal(res1)).
-tff(tiq, conjecture, $true).
+%tff(a01_dummy, axiom, $true).
+tff(tiq, conjecture, ? [X: res] : ($true)).

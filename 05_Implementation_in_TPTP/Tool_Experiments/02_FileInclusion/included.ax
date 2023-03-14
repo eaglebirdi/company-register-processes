@@ -1,1 +1,1 @@
-tff(t01, type, is_legal: $i > $o).
+tff(t01, type, res: $tType).
