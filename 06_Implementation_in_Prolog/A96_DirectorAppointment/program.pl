@@ -1,0 +1,4 @@
+:- [rules].
+:- [individuals].
+:- [casefacts].
+:- [defaults].
