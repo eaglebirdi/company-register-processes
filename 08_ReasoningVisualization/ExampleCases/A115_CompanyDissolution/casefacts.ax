@@ -1,0 +1,214 @@
+tff(fact_company_representationpower, axiom,
+  ! [Company: company, Representationpower: representationpower] :
+  (
+    company_representationpower(Company, Representationpower)
+    <=>
+    (
+      (Company = com1 & Representationpower = joint)
+    )
+  )
+).
+tff(fact_has_company_expiration_date, axiom,
+  ! [Company: company] :
+  (
+    has_company_expiration_date(Company)
+    <=>
+    ($false)
+  )
+).
+
+tff(fact_shareholder_company, axiom,
+  ! [Shareholder: shareholder, Company: company] :
+  (
+    shareholder_company(Shareholder, Company)
+    <=>
+    (
+      (Shareholder = sh_alice & Company = com1) | (Shareholder = sh_ben & Company = com1) | (Shareholder = sh_chris & Company = com1)
+    )
+  )
+).
+tff(fact_shareholder_person, axiom,
+  ! [Shareholder: shareholder, Person: person] :
+  (
+    shareholder_person(Shareholder, Person)
+    <=>
+    (
+      (Shareholder = sh_alice & Person = pers_alice) | (Shareholder = sh_ben & Person = pers_ben) | (Shareholder = sh_chris & Person = pers_chris)
+    )
+  )
+).
+tff(fact_shareholder_votes, axiom,
+  ! [Shareholder: shareholder, X: $int] :
+  (
+    shareholder_votes(Shareholder, X)
+    <=>
+    (
+      (Shareholder = sh_alice & X = 50001) | (Shareholder = sh_ben & X = 39999) | (Shareholder = sh_chris & X = 10000)
+    )
+  )
+).
+
+tff(fact_director_company, axiom,
+  ! [Director: director, Company: company] :
+  (
+    director_company(Director, Company)
+    <=>
+    (
+      (Director = dir_jacob & Company = com1) | (Director = dir_kate & Company = com1) | (Director = dir_chris & Company = com1) | (Director = liq_jacob & Company = com1) | (Director = liq_kate & Company = com1)
+    )
+  )
+).
+tff(fact_director_person, axiom,
+  ! [Director: director, Person: person] :
+  (
+    director_person(Director, Person)
+    <=>
+    (
+      (Director = dir_jacob & Person = pers_jacob) | (Director = dir_kate & Person = pers_kate) | (Director = dir_chris & Person = pers_chris) | (Director = liq_jacob & Person = pers_jacob) | (Director = liq_kate & Person = pers_kate)
+    )
+  )
+).
+tff(fact_director_representationpower, axiom,
+  ! [Director: director, Representationpower: representationpower] :
+  (
+    director_representationpower(Director, Representationpower)
+    <=>
+    (
+      (Director = dir_kate & Representationpower = modified) | (Director = dir_chris & Representationpower = sole)
+    )
+  )
+).
+tff(fact_director_exemption181, axiom,
+  ! [Director: director] :
+  (
+    director_exemption181(Director)
+    <=>
+    ((Director = dir_chris))
+  )
+).
+tff(fact_meeting_format, axiom,
+  ! [Meeting: meeting, Meetingformat: meetingformat] :
+  (
+    meeting_format(Meeting, Meetingformat)
+    <=>
+    (
+      (Meeting = meet1 & Meetingformat = personal)
+    )
+  )
+).
+
+tff(fact_voting_yesvotes, axiom,
+  ! [Voting: voting, X: $int] :
+  (
+    voting_yesvotes(Voting, X)
+    <=>
+    (
+      (Voting = vot1 & X = 90001)
+    )
+  )
+).
+tff(fact_voting_novotes, axiom,
+  ! [Voting: voting, X: $int] :
+  (
+    voting_novotes(Voting, X)
+    <=>
+    (
+      (Voting = vot1 & X = 10000)
+    )
+  )
+).
+tff(fact_voting_abstentions, axiom,
+  ! [Voting: voting, X: $int] :
+  (
+    voting_abstentions(Voting, X)
+    <=>
+    (
+      (Voting = vot1 & X = 0)
+    )
+  )
+).
+
+tff(fact_does_shareholder_consent_to_teleconference_meeting, axiom,
+  ! [Meeting: meeting, Shareholder: shareholder] :
+  (
+    does_shareholder_consent_to_teleconference_meeting(Meeting, Shareholder)
+    <=>
+    (
+      $false
+    )
+  )
+).
+tff(fact_does_shareholder_consent_to_the_determination, axiom,
+  ! [Resolution: resolution, Shareholder: shareholder] :
+  (
+    does_shareholder_consent_to_the_determination(Resolution, Shareholder)
+    <=>
+    (
+      $false
+    )
+  )
+).
+tff(fact_does_shareholder_consent_to_voting_in_writing, axiom,
+  ! [Resolution: resolution, Shareholder: shareholder] :
+  (
+    does_shareholder_consent_to_voting_in_writing(Resolution, Shareholder)
+    <=>
+    (
+      $false
+    )
+  )
+).
+tff(fact_is_resolution_notarized, axiom,
+  ! [Resolution: resolution] :
+  (
+    is_resolution_notarized(Resolution)
+    <=>
+    ($false)
+  )
+).
+
+tff(fact_assurance_signer, axiom,
+  ! [Assurance: assurance, Director: director] :
+  (
+    assurance_signer(Assurance, Director)
+    <=>
+    (
+      (Assurance = ass1 & Director = liq_jacob) | (Assurance = ass1 & Director = liq_kate)
+    )
+  )
+).
+tff(fact_deed_format, axiom,
+  ! [Deed: deed, Deedformat: deedformat] :
+  (
+    deed_format(Deed, Deedformat)
+    <=>
+    (
+      (Deed = deed1 & Deedformat = certifiedcopy)
+    )
+  )
+).
+tff(fact_application_applicant, axiom,
+  ! [Application: application, Director: director] :
+  (
+    application_applicant(Application, Director)
+    <=>
+    (
+      (Application = app1 & Director = liq_jacob) | (Application = app1 & Director = liq_kate)
+    )
+  )
+).
+tff(fact_liquidatorlist_liquidator_liqlr1, axiom,
+  ! [Liquidatorlist: liquidatorlist, Director: director] :
+  (
+    Liquidatorlist = liqlr1
+    =>
+    (
+      liquidatorlist_liquidator(Liquidatorlist, Director)
+      <=>
+      (
+        (Director = liq_jacob) | (Director = liq_kate)
+      )
+    )
+  )
+).
+

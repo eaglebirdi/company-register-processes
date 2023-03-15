@@ -1,0 +1,165 @@
+tff(inst_com1, type, com1 : company).
+tff(inst_app1, type, app1 : application).
+tff(inst_ass1, type, ass1 : assurance).
+tff(inst_aoa1, type, aoa1 : amendedAoA).
+tff(inst_subl1, type, subl1 : subscriberlist).
+tff(inst_ci_res1, type, ci_res1 : capitalincreaseresolution).
+tff(inst_ci_meet1, type, ci_meet1 : meeting).
+tff(inst_ci_vot1, type, ci_vot1 : voting).
+tff(inst_per_res1, type, per_res1 : permitresolution).
+tff(inst_per_meet1, type, per_meet1 : meeting).
+tff(inst_per_vot1, type, per_vot1 : voting).
+tff(inst_sh_dana, type, sh_dana : shareholder).
+tff(inst_sh_alice, type, sh_alice : shareholder).
+tff(inst_sh_ben, type, sh_ben : shareholder).
+tff(inst_sh_chris, type, sh_chris : shareholder).
+tff(inst_dir_jacob, type, dir_jacob : director).
+tff(inst_dir_kate, type, dir_kate : director).
+tff(inst_dir_chris, type, dir_chris : director).
+tff(inst_pers_dana, type, pers_dana : person).
+tff(inst_pers_alice, type, pers_alice : person).
+tff(inst_pers_ben, type, pers_ben : person).
+tff(inst_pers_chris, type, pers_chris : person).
+tff(inst_pers_jacob, type, pers_jacob : person).
+tff(inst_pers_kate, type, pers_kate : person).
+tff(inst_sub_alice, type, sub_alice : subscription).
+tff(inst_sub_dana, type, sub_dana : subscription).
+tff(inst_dcl_alice, type, dcl_alice : declaration).
+tff(inst_dcl_dana, type, dcl_dana : declaration).
+
+tff(inequality_pers_dana_pers_alice, axiom, pers_dana != pers_alice).
+tff(inequality_pers_dana_pers_ben, axiom, pers_dana != pers_ben).
+tff(inequality_pers_dana_pers_chris, axiom, pers_dana != pers_chris).
+tff(inequality_pers_dana_pers_jacob, axiom, pers_dana != pers_jacob).
+tff(inequality_pers_dana_pers_kate, axiom, pers_dana != pers_kate).
+tff(inequality_pers_alice_pers_ben, axiom, pers_alice != pers_ben).
+tff(inequality_pers_alice_pers_chris, axiom, pers_alice != pers_chris).
+tff(inequality_pers_alice_pers_jacob, axiom, pers_alice != pers_jacob).
+tff(inequality_pers_alice_pers_kate, axiom, pers_alice != pers_kate).
+tff(inequality_pers_ben_pers_chris, axiom, pers_ben != pers_chris).
+tff(inequality_pers_ben_pers_jacob, axiom, pers_ben != pers_jacob).
+tff(inequality_pers_ben_pers_kate, axiom, pers_ben != pers_kate).
+tff(inequality_pers_chris_pers_jacob, axiom, pers_chris != pers_jacob).
+tff(inequality_pers_chris_pers_kate, axiom, pers_chris != pers_kate).
+tff(inequality_pers_jacob_pers_kate, axiom, pers_jacob != pers_kate).
+
+tff(inequality_sh_dana_sh_alice, axiom, sh_dana != sh_alice).
+tff(inequality_sh_dana_sh_ben, axiom, sh_dana != sh_ben).
+tff(inequality_sh_dana_sh_chris, axiom, sh_dana != sh_chris).
+tff(inequality_sh_alice_sh_ben, axiom, sh_alice != sh_ben).
+tff(inequality_sh_alice_sh_chris, axiom, sh_alice != sh_chris).
+tff(inequality_sh_ben_sh_chris, axiom, sh_ben != sh_chris).
+
+tff(inequality_dir_jacob_dir_kate, axiom, dir_jacob != dir_kate).
+tff(inequality_dir_jacob_dir_chris, axiom, dir_jacob != dir_chris).
+tff(inequality_dir_kate_dir_chris, axiom, dir_kate != dir_chris).
+
+tff(inequality_ci_meet1_per_meet1, axiom, ci_meet1 != per_meet1).
+
+tff(inequality_ci_vot1_per_vot1, axiom, ci_vot1 != per_vot1).
+
+tff(inequality_dcl_alice_dcl_dana, axiom, dcl_alice != dcl_dana).
+
+tff(inequality_sub_alice_sub_dana, axiom, sub_alice != sub_dana).
+
+tff(relation_application_assurance, axiom,
+  ! [Application: application, Assurance: assurance] :
+  (
+    application_assurance(Application, Assurance)
+    <=>
+    (
+      Application = app1 & Assurance = ass1
+    )
+  )
+).
+tff(relation_application_amendedAoA, axiom,
+  ! [Application: application, Amendedaoa: amendedAoA] :
+  (
+    application_amendedAoA(Application, Amendedaoa)
+    <=>
+    (
+      Application = app1 & Amendedaoa = aoa1
+    )
+  )
+).
+tff(relation_application_subscriberlist, axiom,
+  ! [Application: application, Subscriberlist: subscriberlist] :
+  (
+    application_subscriberlist(Application, Subscriberlist)
+    <=>
+    (
+      Application = app1 & Subscriberlist = subl1
+    )
+  )
+).
+tff(relation_application_capitalincreaseresolution, axiom,
+  ! [Application: application, Capitalincreaseresolution: capitalincreaseresolution] :
+  (
+    application_capitalincreaseresolution(Application, Capitalincreaseresolution)
+    <=>
+    (
+      Application = app1 & Capitalincreaseresolution = ci_res1
+    )
+  )
+).
+tff(relation_company_capitalincreaseresolution, axiom,
+  ! [Company: company, Capitalincreaseresolution: capitalincreaseresolution] :
+  (
+    company_capitalincreaseresolution(Company, Capitalincreaseresolution)
+    <=>
+    (
+      Company = com1 & Capitalincreaseresolution = ci_res1
+    )
+  )
+).
+tff(relation_capitalincreaseresolution_meeting, axiom,
+  ! [Capitalincreaseresolution: capitalincreaseresolution, Meeting: meeting] :
+  (
+    capitalincreaseresolution_meeting(Capitalincreaseresolution, Meeting)
+    <=>
+    (
+      Capitalincreaseresolution = ci_res1 & Meeting = ci_meet1
+    )
+  )
+).
+tff(relation_capitalincreaseresolution_voting, axiom,
+  ! [Capitalincreaseresolution: capitalincreaseresolution, Voting: voting] :
+  (
+    capitalincreaseresolution_voting(Capitalincreaseresolution, Voting)
+    <=>
+    (
+      Capitalincreaseresolution = ci_res1 & Voting = ci_vot1
+    )
+  )
+).
+tff(relation_application_permitresolution, axiom,
+  ! [Application: application, Permitresolution: permitresolution] :
+  (
+    application_permitresolution(Application, Permitresolution)
+    <=>
+    (
+      Application = app1 & Permitresolution = per_res1
+    )
+  )
+).
+tff(relation_permitresolution_meeting, axiom,
+  ! [Permitresolution: permitresolution, Meeting: meeting] :
+  (
+    permitresolution_meeting(Permitresolution, Meeting)
+    <=>
+    (
+      Permitresolution = per_res1 & Meeting = per_meet1
+    )
+  )
+).
+tff(relation_permitresolution_voting, axiom,
+  ! [Permitresolution: permitresolution, Voting: voting] :
+  (
+    permitresolution_voting(Permitresolution, Voting)
+    <=>
+    (
+      Permitresolution = per_res1 & Voting = per_vot1
+    )
+  )
+).
+

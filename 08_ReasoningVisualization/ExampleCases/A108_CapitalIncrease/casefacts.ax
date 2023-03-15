@@ -1,0 +1,299 @@
+tff(fact_contains_AoA_full_text, axiom,
+  ! [Application: application] :
+  (
+    contains_AoA_full_text(Application)
+    <=>
+    ((Application = app1))
+  )
+).
+tff(fact_has_increased_capital_been_covered, axiom,
+  ! [Application: application] :
+  (
+    has_increased_capital_been_covered(Application)
+    <=>
+    ((Application = app1))
+  )
+).
+tff(fact_application_applicant, axiom,
+  ! [Application: application, Director: director] :
+  (
+    application_applicant(Application, Director)
+    <=>
+    (
+      (Application = app1 & Director = dir_jacob) | (Application = app1 & Director = dir_kate) | (Application = app1 & Director = dir_chris)
+    )
+  )
+).
+tff(fact_are_matches_notarily_certified, axiom,
+  ! [Application: application] :
+  (
+    are_matches_notarily_certified(Application)
+    <=>
+    ((Application = app1))
+  )
+).
+tff(fact_amendedAoA_formercapital, axiom,
+  ! [Amendedaoa: amendedAoA, X: $int] :
+  (
+    amendedAoA_formercapital(Amendedaoa, X)
+    <=>
+    (
+      (Amendedaoa = aoa1 & X = 100000)
+    )
+  )
+).
+tff(fact_amendedAoA_increase, axiom,
+  ! [Amendedaoa: amendedAoA, X: $int] :
+  (
+    amendedAoA_increase(Amendedaoa, X)
+    <=>
+    (
+      (Amendedaoa = aoa1 & X = 30000)
+    )
+  )
+).
+tff(fact_amendedAoA_newcapital, axiom,
+  ! [Amendedaoa: amendedAoA, X: $int] :
+  (
+    amendedAoA_newcapital(Amendedaoa, X)
+    <=>
+    (
+      (Amendedaoa = aoa1 & X = 130000)
+    )
+  )
+).
+tff(fact_is_assurance_signed, axiom,
+  ! [Assurance: assurance] :
+  (
+    is_assurance_signed(Assurance)
+    <=>
+    ((Assurance = ass1))
+  )
+).
+tff(fact_does_shareholder_consent_to_the_determination_ci, axiom,
+  ! [Capitalincreaseresolution: capitalincreaseresolution, Shareholder: shareholder] :
+  (
+    does_shareholder_consent_to_the_determination_ci(Capitalincreaseresolution, Shareholder)
+    <=>
+    (
+      $false
+    )
+  )
+).
+tff(fact_does_shareholder_consent_to_voting_in_writing_ci, axiom,
+  ! [Capitalincreaseresolution: capitalincreaseresolution, Shareholder: shareholder] :
+  (
+    does_shareholder_consent_to_voting_in_writing_ci(Capitalincreaseresolution, Shareholder)
+    <=>
+    (
+      $false
+    )
+  )
+).
+tff(fact_is_capitalincreaseresolution_notarized, axiom,
+  ! [Capitalincreaseresolution: capitalincreaseresolution] :
+  (
+    is_capitalincreaseresolution_notarized(Capitalincreaseresolution)
+    <=>
+    ((Capitalincreaseresolution = ci_res1))
+  )
+).
+tff(fact_does_shareholder_consent_to_the_determination_per, axiom,
+  ! [Permitresolution: permitresolution, Shareholder: shareholder] :
+  (
+    does_shareholder_consent_to_the_determination_per(Permitresolution, Shareholder)
+    <=>
+    (
+      $false
+    )
+  )
+).
+tff(fact_does_shareholder_consent_to_voting_in_writing_per, axiom,
+  ! [Permitresolution: permitresolution, Shareholder: shareholder] :
+  (
+    does_shareholder_consent_to_voting_in_writing_per(Permitresolution, Shareholder)
+    <=>
+    (
+      $false
+    )
+  )
+).
+tff(fact_permitresolution_shareholder, axiom,
+  ! [Permitresolution: permitresolution, Shareholder: shareholder] :
+  (
+    permitresolution_shareholder(Permitresolution, Shareholder)
+    <=>
+    (
+      (Permitresolution = per_res1 & Shareholder = sh_dana)
+    )
+  )
+).
+tff(fact_does_shareholder_consent_to_teleconference_meeting, axiom,
+  ! [Meeting: meeting, Shareholder: shareholder] :
+  (
+    does_shareholder_consent_to_teleconference_meeting(Meeting, Shareholder)
+    <=>
+    (
+      (Meeting = ci_meet1 & Shareholder = sh_alice) | (Meeting = ci_meet1 & Shareholder = sh_ben) | (Meeting = ci_meet1 & Shareholder = sh_chris) | (Meeting = per_meet1 & Shareholder = sh_alice) | (Meeting = per_meet1 & Shareholder = sh_ben) | (Meeting = per_meet1 & Shareholder = sh_chris)
+    )
+  )
+).
+tff(fact_meeting_format, axiom,
+  ! [Meeting: meeting, Meetingformat: meetingformat] :
+  (
+    meeting_format(Meeting, Meetingformat)
+    <=>
+    (
+      (Meeting = ci_meet1 & Meetingformat = teleconference) | (Meeting = per_meet1 & Meetingformat = personal)
+    )
+  )
+).
+tff(fact_voting_yesvotes, axiom,
+  ! [Voting: voting, X: $int] :
+  (
+    voting_yesvotes(Voting, X)
+    <=>
+    (
+      (Voting = ci_vot1 & X = 90001) | (Voting = per_vot1 & X = 90001)
+    )
+  )
+).
+tff(fact_voting_novotes, axiom,
+  ! [Voting: voting, X: $int] :
+  (
+    voting_novotes(Voting, X)
+    <=>
+    (
+      (Voting = ci_vot1 & X = 10000) | (Voting = per_vot1 & X = 10000)
+    )
+  )
+).
+tff(fact_voting_abstentions, axiom,
+  ! [Voting: voting, X: $int] :
+  (
+    voting_abstentions(Voting, X)
+    <=>
+    (
+      (Voting = ci_vot1 & X = 0) | (Voting = per_vot1 & X = 0)
+    )
+  )
+).
+tff(fact_shareholder_company, axiom,
+  ! [Shareholder: shareholder, Company: company] :
+  (
+    shareholder_company(Shareholder, Company)
+    <=>
+    (
+      (Shareholder = sh_alice & Company = com1) | (Shareholder = sh_ben & Company = com1) | (Shareholder = sh_chris & Company = com1)
+    )
+  )
+).
+tff(fact_shareholder_person, axiom,
+  ! [Shareholder: shareholder, Person: person] :
+  (
+    shareholder_person(Shareholder, Person)
+    <=>
+    (
+      (Shareholder = sh_dana & Person = pers_dana) | (Shareholder = sh_alice & Person = pers_alice) | (Shareholder = sh_ben & Person = pers_ben) | (Shareholder = sh_chris & Person = pers_chris)
+    )
+  )
+).
+tff(fact_shareholder_votes, axiom,
+  ! [Shareholder: shareholder, X: $int] :
+  (
+    shareholder_votes(Shareholder, X)
+    <=>
+    (
+      (Shareholder = sh_alice & X = 50001) | (Shareholder = sh_ben & X = 39999) | (Shareholder = sh_chris & X = 10000)
+    )
+  )
+).
+tff(fact_director_company, axiom,
+  ! [Director: director, Company: company] :
+  (
+    director_company(Director, Company)
+    <=>
+    (
+      (Director = dir_jacob & Company = com1) | (Director = dir_kate & Company = com1) | (Director = dir_chris & Company = com1)
+    )
+  )
+).
+tff(fact_director_person, axiom,
+  ! [Director: director, Person: person] :
+  (
+    director_person(Director, Person)
+    <=>
+    (
+      (Director = dir_jacob & Person = pers_jacob) | (Director = dir_kate & Person = pers_kate) | (Director = dir_chris & Person = pers_chris)
+    )
+  )
+).
+tff(fact_subscriberlist_subscription, axiom,
+  ! [Subscriberlist: subscriberlist, Subscription: subscription] :
+  (
+    subscriberlist_subscription(Subscriberlist, Subscription)
+    <=>
+    (
+      (Subscriberlist = subl1 & Subscription = sub_alice) | (Subscriberlist = subl1 & Subscription = sub_dana)
+    )
+  )
+).
+tff(fact_subscription_shareholder, axiom,
+  ! [Subscription: subscription, Shareholder: shareholder] :
+  (
+    subscription_shareholder(Subscription, Shareholder)
+    <=>
+    (
+      (Subscription = sub_alice & Shareholder = sh_alice) | (Subscription = sub_dana & Shareholder = sh_dana)
+    )
+  )
+).
+tff(fact_subscription_shares, axiom,
+  ! [Subscription: subscription, X: $int] :
+  (
+    subscription_shares(Subscription, X)
+    <=>
+    (
+      (Subscription = sub_alice & X = 10000) | (Subscription = sub_dana & X = 20000)
+    )
+  )
+).
+tff(fact_application_declaration, axiom,
+  ! [Application: application, Declaration: declaration] :
+  (
+    application_declaration(Application, Declaration)
+    <=>
+    (
+      (Application = app1 & Declaration = dcl_alice) | (Application = app1 & Declaration = dcl_dana)
+    )
+  )
+).
+tff(fact_declaration_shareholder, axiom,
+  ! [Declaration: declaration, Shareholder: shareholder] :
+  (
+    declaration_shareholder(Declaration, Shareholder)
+    <=>
+    (
+      (Declaration = dcl_alice & Shareholder = sh_alice) | (Declaration = dcl_dana & Shareholder = sh_dana)
+    )
+  )
+).
+tff(fact_declaration_format, axiom,
+  ! [Declaration: declaration, Declarationformat: declarationformat] :
+  (
+    declaration_format(Declaration, Declarationformat)
+    <=>
+    (
+      (Declaration = dcl_alice & Declarationformat = original) | (Declaration = dcl_dana & Declarationformat = original)
+    )
+  )
+).
+tff(fact_is_declaration_notarized, axiom,
+  ! [Declaration: declaration] :
+  (
+    is_declaration_notarized(Declaration)
+    <=>
+    ((Declaration = dcl_alice) | (Declaration = dcl_dana))
+  )
+).
+
