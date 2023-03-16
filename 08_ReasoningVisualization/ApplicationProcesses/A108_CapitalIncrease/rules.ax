@@ -531,7 +531,7 @@ tff(is_amended_AoA_plausible, axiom,
     <=
     (
       is_amended_AoA_plausible_concerning_old_new_increase(AmendedAoA)
-    | is_amendedAoA_plausible_concerning_new_sum_of_nominals(AmendedAoA)
+    & is_amended_AoA_plausible_concerning_new_sum_of_nominals(AmendedAoA)
     )
   )
 ).
@@ -546,11 +546,11 @@ tff(is_amended_AoA_plausible_concerning_old_new_increase, axiom,
   )
 ).
 
-% ToDo: is_amendedAoA_plausible_concerning_new_sum_of_nominals is not yet implemented
-tff(is_amendedAoA_plausible_concerning_new_sum_of_nominals, axiom,
+% ToDo: is_amended_AoA_plausible_concerning_new_sum_of_nominals is not yet implemented
+tff(is_amended_AoA_plausible_concerning_new_sum_of_nominals, axiom,
   ! [AmendedAoA: amendedAoA] :
   (
-    is_amendedAoA_plausible_concerning_new_sum_of_nominals(AmendedAoA)
+    is_amended_AoA_plausible_concerning_new_sum_of_nominals(AmendedAoA)
     <=
     $true
   )

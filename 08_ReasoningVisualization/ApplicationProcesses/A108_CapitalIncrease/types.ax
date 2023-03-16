@@ -62,7 +62,7 @@ tff(pred_are_all_declarations_legal, type, are_all_declarations_legal: applicati
 
 tff(pred_is_amended_AoA_plausible, type, is_amended_AoA_plausible: amendedAoA > $o). % scheme item 9
 tff(pred_is_amended_AoA_plausible_concerning_old_new_increase, type, is_amended_AoA_plausible_concerning_old_new_increase: amendedAoA > $o). % scheme item 9.1
-tff(pred_is_amendedAoA_plausible_concerning_new_sum_of_nominals, type, is_amendedAoA_plausible_concerning_new_sum_of_nominals: amendedAoA > $o). % scheme item 9.2
+tff(pred_is_amended_AoA_plausible_concerning_new_sum_of_nominals, type, is_amended_AoA_plausible_concerning_new_sum_of_nominals: amendedAoA > $o). % scheme item 9.2
 
 tff(pred_do_all_directors_perform_the_application, type, do_all_directors_perform_the_application: application > $o). % scheme item 10
 

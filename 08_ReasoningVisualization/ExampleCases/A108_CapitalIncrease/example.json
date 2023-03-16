@@ -31,7 +31,7 @@
     "meeting": {
       "occurred": true,
       "format": "personal",
-      "consents_to_teleconference": [ "alice", "ben", "chris" ]
+      "consents_to_teleconference": null
     },
     "voting": {
       "yes_votes": 90001,

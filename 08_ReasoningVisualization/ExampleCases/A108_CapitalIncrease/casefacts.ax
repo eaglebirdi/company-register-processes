@@ -134,7 +134,7 @@ tff(fact_does_shareholder_consent_to_teleconference_meeting, axiom,
     does_shareholder_consent_to_teleconference_meeting(Meeting, Shareholder)
     <=>
     (
-      (Meeting = ci_meet1 & Shareholder = sh_alice) | (Meeting = ci_meet1 & Shareholder = sh_ben) | (Meeting = ci_meet1 & Shareholder = sh_chris) | (Meeting = per_meet1 & Shareholder = sh_alice) | (Meeting = per_meet1 & Shareholder = sh_ben) | (Meeting = per_meet1 & Shareholder = sh_chris)
+      (Meeting = ci_meet1 & Shareholder = sh_alice) | (Meeting = ci_meet1 & Shareholder = sh_ben) | (Meeting = ci_meet1 & Shareholder = sh_chris)
     )
   )
 ).
