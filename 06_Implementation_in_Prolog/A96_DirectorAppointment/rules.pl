@@ -28,6 +28,7 @@ is_resolution_formally_legal(R) :-
 is_resolution_with_meeting_formally_legal(R) :-
   is_of_sort(R, res),
   is_of_sort(M, meet),
+  resolution_meeting(R, M),
   is_meeting_legal(M).
 
 is_resolution_without_meeting_formally_legal(R) :-
