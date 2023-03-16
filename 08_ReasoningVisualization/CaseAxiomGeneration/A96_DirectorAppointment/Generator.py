@@ -86,7 +86,7 @@ class Generator(IGenerator):
         meeting = resolution['meeting']
         application = input_data['application']
         shareholders = company['shareholders']
-        directors = company['directors']
+        company_directors = company['directors']
         new_director = resolution['new_director']
 
         cname_company = get_cname_company()
@@ -114,10 +114,11 @@ class Generator(IGenerator):
 
         result += newline
 
-        result += self.fact_helper.create_casefact_declaration_binary("director_company", "director", "company", [(get_cname_director(x), cname_company) for x in directors])
-        result += self.fact_helper.create_casefact_declaration_binary("director_person", "director", "person", [(get_cname_director(x), get_cname_person(x)) for x in directors])
-        result += self.fact_helper.create_casefact_declaration_binary("director_representationpower", "director", "representationpower", [(get_cname_director(x), x['representationpower']) for x in directors if not is_empty(x.get('representationpower'))])
-        result += self.fact_helper.create_casefact_declaration_monadic("director_exemption181", "director", [get_cname_director(x) for x in directors if x.get('exemption181')])
+        directors_incl_new = company_directors + [new_director]
+        result += self.fact_helper.create_casefact_declaration_binary("director_company", "director", "company", [(get_cname_director(x), cname_company) for x in company_directors])
+        result += self.fact_helper.create_casefact_declaration_binary("director_person", "director", "person", [(get_cname_director(x), get_cname_person(x)) for x in directors_incl_new])
+        result += self.fact_helper.create_casefact_declaration_binary("director_representationpower", "director", "representationpower", [(get_cname_director(x), x['representationpower']) for x in directors_incl_new if not is_empty(x.get('representationpower'))])
+        result += self.fact_helper.create_casefact_declaration_monadic("director_exemption181", "director", [get_cname_director(x) for x in directors_incl_new if x.get('exemption181')])
 
         if meeting['occurred'] and not is_empty(meeting['format']):
             meeting_formats = [(get_cname_meeting(), meeting['format'])]
@@ -204,10 +205,10 @@ class Generator(IGenerator):
         result += self.fact_helper.create_nonpredcompl_casefact_monadic("is_resolution_passed_via_voting", cname_res, not is_majority)
         return result
 
-    def _get_all_persons_cnames(self, shareholders, directors, new_director) -> List[str]:
+    def _get_all_persons_cnames(self, shareholders, company_directors, new_director) -> List[str]:
         names = []
         names += [get_cname_person(x) for x in shareholders]
-        names += [get_cname_person(x) for x in directors]
+        names += [get_cname_person(x) for x in company_directors]
         names += [get_cname_person(new_director)]
 
         names = list(dict.fromkeys(names))
