@@ -66,7 +66,7 @@ tff(fact_director_person, axiom,
     director_person(Director, Person)
     <=>
     (
-      (Director = dir_jacob & Person = pers_jacob) | (Director = dir_kate & Person = pers_kate) | (Director = dir_chris & Person = pers_chris)
+      (Director = dir_jacob & Person = pers_jacob) | (Director = dir_kate & Person = pers_kate) | (Director = dir_chris & Person = pers_chris) | (Director = dir_luca & Person = pers_luca)
     )
   )
 ).
@@ -76,7 +76,7 @@ tff(fact_director_representationpower, axiom,
     director_representationpower(Director, Representationpower)
     <=>
     (
-      (Director = dir_kate & Representationpower = modified) | (Director = dir_chris & Representationpower = sole)
+      (Director = dir_kate & Representationpower = modified) | (Director = dir_chris & Representationpower = sole) | (Director = dir_luca & Representationpower = modified)
     )
   )
 ).
