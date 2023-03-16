@@ -241,6 +241,44 @@ tff(company_liquidatorlist, axiom,
   )
 ).
 
+tff(application_responsibleapplicant, axiom,
+  ! [Application: application, ResponsibleApplicant: director] :
+  (
+    application_responsibleapplicant(Application, ResponsibleApplicant)
+    <=>
+    (
+      ? [Resolution: resolution, Company: company, LiquidatorList: liquidatorlist] :
+      (
+        application_resolution(Application, Resolution)
+      & company_resolution(Company, Resolution)
+      & company_liquidatorlist(Company, LiquidatorList)
+      & (
+          (
+            are_AoA_amended(Resolution)
+          & (
+              ? [Director: director] :
+              (
+                director_company(Director, Company)
+              & ResponsibleApplicant = Director
+              )
+            )
+          )
+        | (
+            ~are_AoA_amended(Resolution)
+          & (
+              ? [Liquidator: director] :
+              (
+                liquidatorlist_liquidator(LiquidatorList, Liquidator)
+              & ResponsibleApplicant = Liquidator
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+).
+
 tff(is_liquidator_appointment_deed_legal, axiom,
   ! [Deed: deed] :
   (
@@ -269,7 +307,13 @@ tff(are_all_liquidator_assurances_signed, axiom,
         (
           liquidatorlist_liquidator(LiquidatorList, Liquidator)
           =>
-          assurance_signer(Assurance, Liquidator)
+          (
+            ? [Person: person] :
+            (
+              director_person(Liquidator, Person)
+            & assurance_signer(Assurance, Person)
+            )
+          )
         )
       )
     )
@@ -286,7 +330,7 @@ tff(are_applicants_authorized, axiom,
     | are_applicants_authorized_via_individual_sole_representation_power(Application)
     | are_applicants_authorized_via_general_modified_representation_power(Application)
     | are_applicants_authorized_via_individual_modified_representation_power(Application)
-    | are_all_liquidators_present(Application)
+    | are_all_responsibleapplicants_present(Application)
     )
   )
 ).
@@ -297,18 +341,18 @@ tff(are_applicants_authorized_via_general_sole_representation_power, axiom,
     are_applicants_authorized_via_general_sole_representation_power(Application)
     <=
     (
-      ? [Resolution: resolution, Company: company, LiquidatorList: liquidatorlist, Liquidator: director] :
+      ? [Resolution: resolution, Company: company, ResponsibleApplicant: director, Person: person] :
       (
         application_resolution(Application, Resolution)
       & company_resolution(Company, Resolution)
-      & company_liquidatorlist(Company, LiquidatorList)
       & company_representationpower(Company, sole)
-      & liquidatorlist_liquidator(LiquidatorList, Liquidator)
-      & application_applicant(Application, Liquidator)
+      & application_responsibleapplicant(Application, ResponsibleApplicant)
+      & director_person(ResponsibleApplicant, Person)
+      & application_applicant(Application, Person)
       & (
           ~? [Repr: representationpower] :
           (
-            director_representationpower(Liquidator, Repr)
+            director_representationpower(ResponsibleApplicant, Repr)
           )
         )
       )
@@ -322,14 +366,14 @@ tff(are_applicants_authorized_via_individual_sole_representation_power, axiom,
     are_applicants_authorized_via_individual_sole_representation_power(Application)
     <=
     (
-      ? [Resolution: resolution, Company: company, LiquidatorList: liquidatorlist, Liquidator: director] :
+      ? [Resolution: resolution, Company: company, ResponsibleApplicant: director, Person: person] :
       (
         application_resolution(Application, Resolution)
       & company_resolution(Company, Resolution)
-      & company_liquidatorlist(Company, LiquidatorList)
-      & liquidatorlist_liquidator(LiquidatorList, Liquidator)
-      & application_applicant(Application, Liquidator)
-      & director_representationpower(Liquidator, sole)
+      & application_responsibleapplicant(Application, ResponsibleApplicant)
+      & director_person(ResponsibleApplicant, Person)
+      & application_applicant(Application, Person)
+      & director_representationpower(ResponsibleApplicant, sole)
       )
     )
   )
@@ -341,23 +385,24 @@ tff(are_applicants_authorized_via_general_modified_representation_power, axiom,
     are_applicants_authorized_via_general_modified_representation_power(Application)
     <=
     (
-      ? [Resolution: resolution, Company: company, LiquidatorList: liquidatorlist, Liquidator1: director, Liquidator2: director] :
+      ? [Resolution: resolution, Company: company, ResponsibleApplicant1: director, Person1: person, ResponsibleApplicant2: director, Person2: person] :
       (
         application_resolution(Application, Resolution)
       & company_resolution(Company, Resolution)
-      & company_liquidatorlist(Company, LiquidatorList)
       & company_representationpower(Company, modified)
-      & liquidatorlist_liquidator(LiquidatorList, Liquidator1)
-      & liquidatorlist_liquidator(LiquidatorList, Liquidator2)
-      & application_applicant(Application, Liquidator1)
-      & application_applicant(Application, Liquidator2)
+      & application_responsibleapplicant(Application, ResponsibleApplicant1)
+      & application_responsibleapplicant(Application, ResponsibleApplicant2)
+      & director_person(ResponsibleApplicant1, Person1)
+      & director_person(ResponsibleApplicant2, Person2)
+      & application_applicant(Application, Person1)
+      & application_applicant(Application, Person2)
       & (
           ~? [Repr: representationpower] :
           (
-            director_representationpower(Liquidator1, Repr)
+            director_representationpower(ResponsibleApplicant1, Repr)
           )
         )
-      & Liquidator1 != Liquidator2
+      & Person1 != Person2
       )
     )
   )
@@ -369,39 +414,43 @@ tff(are_applicants_authorized_via_individual_modified_representation_power, axio
     are_applicants_authorized_via_individual_modified_representation_power(Application)
     <=
     (
-      ? [Resolution: resolution, Company: company, LiquidatorList: liquidatorlist, Liquidator1: director, Liquidator2: director] :
+      ? [Resolution: resolution, Company: company, ResponsibleApplicant1: director, Person1: person, ResponsibleApplicant2: director, Person2: person] :
       (
         application_resolution(Application, Resolution)
       & company_resolution(Company, Resolution)
-      & company_liquidatorlist(Company, LiquidatorList)
-      & liquidatorlist_liquidator(LiquidatorList, Liquidator1)
-      & liquidatorlist_liquidator(LiquidatorList, Liquidator2)
-      & application_applicant(Application, Liquidator1)
-      & application_applicant(Application, Liquidator2)
-      & director_representationpower(Liquidator1, modified)
-      & Liquidator1 != Liquidator2
+      & application_responsibleapplicant(Application, ResponsibleApplicant1)
+      & application_responsibleapplicant(Application, ResponsibleApplicant2)
+      & director_person(ResponsibleApplicant1, Person1)
+      & director_person(ResponsibleApplicant2, Person2)
+      & application_applicant(Application, Person1)
+      & application_applicant(Application, Person2)
+      & director_representationpower(ResponsibleApplicant1, modified)
+      & Person1 != Person2
       )
     )
   )
 ).
 
-tff(are_all_liquidators_present, axiom,
+tff(are_all_responsibleapplicants_present, axiom,
   ! [Application: application] :
   (
-    are_all_liquidators_present(Application)
+    are_all_responsibleapplicants_present(Application)
     <=
     (
       ? [Company: company, Resolution: resolution, LiquidatorList: liquidatorlist] :
       (
         application_resolution(Application, Resolution)
       & company_resolution(Company, Resolution)
-      & company_liquidatorlist(Company, LiquidatorList)
       & (
-          ! [Liquidator: director] :
+          ! [ResponsibleApplicant: director] :
           (
-            liquidatorlist_liquidator(LiquidatorList, Liquidator)
+            application_responsibleapplicant(Application, ResponsibleApplicant)
             =>
-            application_applicant(Application, Liquidator)
+            ? [Person: person] :
+            (
+              director_person(ResponsibleApplicant, Person)
+            & application_applicant(Application, Person)
+            )
           )
         )
       )

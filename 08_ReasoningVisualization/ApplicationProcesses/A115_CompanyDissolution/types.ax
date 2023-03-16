@@ -47,13 +47,14 @@ tff(pred_are_all_liquidator_assurances_signed, type, are_all_liquidator_assuranc
 tff(pred_are_applicants_authorized, type, are_applicants_authorized: application > $o). % scheme item 5
 
 tff(pred_are_applicants_authorized, type, are_applicants_authorized: application > $o). % scheme item 5
-tff(pred_are_applicants_authorized_via_general_sole_representation_power, type, are_applicants_authorized_via_general_sole_representation_power: application > $o). % scheme item 5.1
-tff(pred_are_applicants_authorized_via_individual_sole_representation_power, type, are_applicants_authorized_via_individual_sole_representation_power: application > $o). % scheme item 5.1
-tff(pred_are_applicants_authorized_via_general_modified_representation_power, type, are_applicants_authorized_via_general_modified_representation_power: application > $o). % scheme item 5.2
-tff(pred_are_applicants_authorized_via_individual_modified_representation_power, type, are_applicants_authorized_via_individual_modified_representation_power: application > $o). % scheme item 5.2
-tff(pred_are_all_liquidators_present, type, are_all_liquidators_present: application > $o). % scheme item 5.3
+tff(pred_are_applicants_authorized_via_general_sole_representation_power, type, are_applicants_authorized_via_general_sole_representation_power: application > $o). % scheme item 5.*.1
+tff(pred_are_applicants_authorized_via_individual_sole_representation_power, type, are_applicants_authorized_via_individual_sole_representation_power: application > $o). % scheme item 5.*.1
+tff(pred_are_applicants_authorized_via_general_modified_representation_power, type, are_applicants_authorized_via_general_modified_representation_power: application > $o). % scheme item 5.*.2
+tff(pred_are_applicants_authorized_via_individual_modified_representation_power, type, are_applicants_authorized_via_individual_modified_representation_power: application > $o). % scheme item 5.*.2
+tff(pred_are_all_responsibleapplicants_present, type, are_all_responsibleapplicants_present: application > $o). % scheme item 5.*.3
 
 tff(pred_are_AoA_amended, type, are_AoA_amended: resolution > $o).
+tff(pred_application_responsibleapplicant, type, application_responsibleapplicant: (application * director) > $o).
 
 
 
@@ -71,8 +72,6 @@ tff(pred_resolution_voting, type, resolution_voting: (resolution * voting) > $o)
 tff(pred_application_resolution, type, application_resolution: (application * resolution) > $o).
 tff(pred_application_deed, type, application_deed: (application * deed) > $o).
 tff(pred_application_assurance, type, application_assurance: (application * assurance) > $o).
-
-tff(pred_application_applicant, type, application_applicant: (application * director) > $o).
 
 
 
@@ -103,5 +102,5 @@ tff(pred_voting_yesratio, type, voting_yesratio: (voting * $real) > $o).
 tff(pred_is_resolution_notarized, type, is_resolution_notarized: resolution > $o).
 
 tff(pred_deed_format, type, deed_format: (deed * deedformat) > $o).
-tff(pred_assurance_signer, type, assurance_signer: (assurance * director) > $o).
-tff(pred_application_applicant, type, application_applicant: (application * director) > $o).
+tff(pred_assurance_signer, type, assurance_signer: (assurance * person) > $o).
+tff(pred_application_applicant, type, application_applicant: (application * person) > $o).

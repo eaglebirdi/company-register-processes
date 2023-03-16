@@ -54,7 +54,7 @@ tff(fact_director_company, axiom,
     director_company(Director, Company)
     <=>
     (
-      (Director = dir_jacob & Company = com1) | (Director = dir_kate & Company = com1) | (Director = dir_chris & Company = com1) | (Director = liq_jacob & Company = com1) | (Director = liq_kate & Company = com1)
+      (Director = dir_jacob & Company = com1) | (Director = dir_kate & Company = com1) | (Director = dir_chris & Company = com1)
     )
   )
 ).
@@ -64,7 +64,7 @@ tff(fact_director_person, axiom,
     director_person(Director, Person)
     <=>
     (
-      (Director = dir_jacob & Person = pers_jacob) | (Director = dir_kate & Person = pers_kate) | (Director = dir_chris & Person = pers_chris) | (Director = liq_jacob & Person = pers_jacob) | (Director = liq_kate & Person = pers_kate)
+      (Director = dir_jacob & Person = pers_jacob) | (Director = dir_kate & Person = pers_kate) | (Director = dir_chris & Person = pers_chris) | (Director = liq_jacob & Person = pers_jacob) | (Director = liq_kate & Person = pers_kate) | (Director = liq_luca & Person = pers_luca)
     )
   )
 ).
@@ -74,7 +74,7 @@ tff(fact_director_representationpower, axiom,
     director_representationpower(Director, Representationpower)
     <=>
     (
-      (Director = dir_kate & Representationpower = modified) | (Director = dir_chris & Representationpower = sole)
+      (Director = dir_kate & Representationpower = modified) | (Director = dir_chris & Representationpower = sole) | (Director = liq_luca & Representationpower = sole)
     )
   )
 ).
@@ -92,7 +92,7 @@ tff(fact_meeting_format, axiom,
     meeting_format(Meeting, Meetingformat)
     <=>
     (
-      (Meeting = meet1 & Meetingformat = personal)
+      (Meeting = meet1 & Meetingformat = teleconference)
     )
   )
 ).
@@ -134,7 +134,7 @@ tff(fact_does_shareholder_consent_to_teleconference_meeting, axiom,
     does_shareholder_consent_to_teleconference_meeting(Meeting, Shareholder)
     <=>
     (
-      $false
+      (Meeting = meet1 & Shareholder = sh_alice) | (Meeting = meet1 & Shareholder = sh_ben) | (Meeting = meet1 & Shareholder = sh_chris)
     )
   )
 ).
@@ -168,12 +168,12 @@ tff(fact_is_resolution_notarized, axiom,
 ).
 
 tff(fact_assurance_signer, axiom,
-  ! [Assurance: assurance, Director: director] :
+  ! [Assurance: assurance, Person: person] :
   (
-    assurance_signer(Assurance, Director)
+    assurance_signer(Assurance, Person)
     <=>
     (
-      (Assurance = ass1 & Director = liq_jacob) | (Assurance = ass1 & Director = liq_kate)
+      (Assurance = ass1 & Person = pers_jacob) | (Assurance = ass1 & Person = pers_kate) | (Assurance = ass1 & Person = pers_luca)
     )
   )
 ).
@@ -188,12 +188,12 @@ tff(fact_deed_format, axiom,
   )
 ).
 tff(fact_application_applicant, axiom,
-  ! [Application: application, Director: director] :
+  ! [Application: application, Person: person] :
   (
-    application_applicant(Application, Director)
+    application_applicant(Application, Person)
     <=>
     (
-      (Application = app1 & Director = liq_jacob) | (Application = app1 & Director = liq_kate)
+      (Application = app1 & Person = pers_luca)
     )
   )
 ).
@@ -206,7 +206,7 @@ tff(fact_liquidatorlist_liquidator_liqlr1, axiom,
       liquidatorlist_liquidator(Liquidatorlist, Director)
       <=>
       (
-        (Director = liq_jacob) | (Director = liq_kate)
+        (Director = liq_jacob) | (Director = liq_kate) | (Director = liq_luca)
       )
     )
   )

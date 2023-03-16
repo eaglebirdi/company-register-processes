@@ -83,9 +83,13 @@ class Generator(IGenerator):
 
         if company_liquidators is not None:
             result += self.inst_helper.create_relation_declaration("company_AoA_liquidatorlist", "company", "liquidatorlist", get_cname_company(), get_cname_liquidatorlist_AoA())
+        else:
+            result += self.fact_helper.create_casefact_declaration_binary("company_AoA_liquidatorlist", "company", "liquidatorlist", [])
 
         if resolution_liquidators is not None:
             result += self.inst_helper.create_relation_declaration("resolution_liquidatorlist", "resolution", "liquidatorlist", get_cname_resolution(), get_cname_liquidatorlist_resolution())
+        else:
+            result += self.fact_helper.create_casefact_declaration_binary("resolution_liquidatorlist", "resolution", "liquidatorlist", [])
 
         return result
 
@@ -122,7 +126,7 @@ class Generator(IGenerator):
 
         directors_and_liquidators = self.get_directors_and_liquidators(input_data)
 
-        result += self.fact_helper.create_casefact_declaration_binary("director_company", "director", "company", [(x, cname_company) for x, y in directors_and_liquidators])
+        result += self.fact_helper.create_casefact_declaration_binary("director_company", "director", "company", [(get_cname_director(x), cname_company) for x in directors])
         result += self.fact_helper.create_casefact_declaration_binary("director_person", "director", "person", [(x, get_cname_person(y)) for x, y in directors_and_liquidators])
         result += self.fact_helper.create_casefact_declaration_binary("director_representationpower", "director", "representationpower", [(x, y['representationpower']) for x, y in directors_and_liquidators if not is_empty(y.get('representationpower'))])
         result += self.fact_helper.create_casefact_declaration_monadic("director_exemption181", "director", [x for x, y in directors_and_liquidators if y.get('exemption181')])
@@ -156,10 +160,10 @@ class Generator(IGenerator):
 
             result += newline
 
-        consents_to_teleconference = meeting.get('consent_to_teleconference')
+        consents_to_teleconference = meeting.get('consents_to_teleconference')
         if consents_to_teleconference is None:
             consents_to_teleconference = []
-        result += self.fact_helper.create_casefact_declaration_binary("does_shareholder_consent_to_teleconference_meeting", "meeting", "shareholder", [(get_cname_voting(), get_cname_shareholder(x)) for x in consents_to_teleconference])
+        result += self.fact_helper.create_casefact_declaration_binary("does_shareholder_consent_to_teleconference_meeting", "meeting", "shareholder", [(get_cname_meeting(), get_cname_shareholder(x)) for x in consents_to_teleconference])
 
         written_consents = resolution.get('written_consents')
         if written_consents is None:
@@ -183,14 +187,13 @@ class Generator(IGenerator):
         company_liquidators = company.get('liquidators')
         resolution_liquidators = resolution.get('liquidators')
 
-        dirliq_cname_func = get_cname_director if company_liquidators is None and resolution_liquidators is None else get_cname_liquidator
-        assurance_signers = [(get_cname_assurance(), dirliq_cname_func(x)) for x in assurance_signers]
-        result += self.fact_helper.create_casefact_declaration_binary("assurance_signer", "assurance", "director", assurance_signers)
+        assurance_signers = [(get_cname_assurance(), get_cname_person(x)) for x in assurance_signers]
+        result += self.fact_helper.create_casefact_declaration_binary("assurance_signer", "assurance", "person", assurance_signers)
 
         result += self.fact_helper.create_casefact_declaration_binary("deed_format", "deed", "deedformat", [(get_cname_deed(), application['deed_format'])])
 
         applicants = application.get('applicants')
-        result += self.fact_helper.create_casefact_declaration_binary("application_applicant", "application", "director", [(get_cname_application(), dirliq_cname_func(x)) for x in applicants])
+        result += self.fact_helper.create_casefact_declaration_binary("application_applicant", "application", "person", [(get_cname_application(), get_cname_person(x)) for x in applicants])
 
         if company_liquidators is not None:
             result += self.fact_helper.create_casefact_declaration_binary_grouped(
@@ -227,23 +230,31 @@ class Generator(IGenerator):
         result += self.fact_helper.create_nonpredcompl_casefact_monadic("is_resolution_passed_via_voting", cname_res, not is_majority)
         return result
 
-    def get_directors_and_liquidators(self, input_data: dict):
+    def get_liquidators(self, input_data: dict):
         company = input_data['company']
         resolution = input_data['resolution']
-        directors = company['directors']
 
-        directors_and_liquidators = []
-        directors_and_liquidators += [(get_cname_director(x), x) for x in directors]
+        liquidators = []
 
         company_liquidators = company.get('liquidators')
         if company_liquidators is not None:
             for liquidator in company_liquidators:
-                directors_and_liquidators.append((get_cname_liquidator(liquidator), liquidator))
+                liquidators.append((get_cname_liquidator(liquidator), liquidator))
 
         resolution_liquidators = resolution.get('liquidators')
         if resolution_liquidators is not None:
             for liquidator in resolution_liquidators:
-                directors_and_liquidators.append((get_cname_liquidator(liquidator), liquidator))
+                liquidators.append((get_cname_liquidator(liquidator), liquidator))
+
+        return liquidators
+
+    def get_directors_and_liquidators(self, input_data: dict):
+        company = input_data['company']
+        directors = company['directors']
+
+        directors_and_liquidators = []
+        directors_and_liquidators += [(get_cname_director(x), x) for x in directors]
+        directors_and_liquidators += self.get_liquidators(input_data)
 
         return directors_and_liquidators
 

@@ -71,5 +71,8 @@ def get_cname_liquidator(liquidator: Union[str, dict]):
 
 
 def get_cname_person(person: dict):
-    name = person['name']
+    if isinstance(person, str):
+        name = person
+    else:
+        name = person['name']
     return "pers_" + normalize_name(name)

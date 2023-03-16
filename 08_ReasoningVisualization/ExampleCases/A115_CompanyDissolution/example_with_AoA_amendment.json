@@ -11,7 +11,7 @@
       { "name": "chris", "representationpower": "sole", "exemption181": true }
     ],
     "representationpower": "joint",
-    "has_expiration_date": false,
+    "has_expiration_date": true,
     "liquidators": null
   },
   "resolution": {
@@ -32,11 +32,11 @@
     },
     "written_consents": null,
     "consents_to_voting_in_writing": null,
-    "notarized": false
+    "notarized": true
   },
   "application": {
     "assurance_signers": [ "jacob", "kate", "luca" ],
     "deed_format": "certifiedcopy",
-    "applicants": [ "luca" ]
+    "applicants": [ "chris" ]
   }
 }

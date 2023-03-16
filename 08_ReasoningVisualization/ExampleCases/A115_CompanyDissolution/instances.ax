@@ -11,6 +11,7 @@ tff(inst_pers_ben, type, pers_ben : person).
 tff(inst_pers_chris, type, pers_chris : person).
 tff(inst_pers_jacob, type, pers_jacob : person).
 tff(inst_pers_kate, type, pers_kate : person).
+tff(inst_pers_luca, type, pers_luca : person).
 tff(inst_sh_alice, type, sh_alice : shareholder).
 tff(inst_sh_ben, type, sh_ben : shareholder).
 tff(inst_sh_chris, type, sh_chris : shareholder).
@@ -19,17 +20,23 @@ tff(inst_dir_kate, type, dir_kate : director).
 tff(inst_dir_chris, type, dir_chris : director).
 tff(inst_liq_jacob, type, liq_jacob : director).
 tff(inst_liq_kate, type, liq_kate : director).
+tff(inst_liq_luca, type, liq_luca : director).
 
 tff(inequality_pers_alice_pers_ben, axiom, pers_alice != pers_ben).
 tff(inequality_pers_alice_pers_chris, axiom, pers_alice != pers_chris).
 tff(inequality_pers_alice_pers_jacob, axiom, pers_alice != pers_jacob).
 tff(inequality_pers_alice_pers_kate, axiom, pers_alice != pers_kate).
+tff(inequality_pers_alice_pers_luca, axiom, pers_alice != pers_luca).
 tff(inequality_pers_ben_pers_chris, axiom, pers_ben != pers_chris).
 tff(inequality_pers_ben_pers_jacob, axiom, pers_ben != pers_jacob).
 tff(inequality_pers_ben_pers_kate, axiom, pers_ben != pers_kate).
+tff(inequality_pers_ben_pers_luca, axiom, pers_ben != pers_luca).
 tff(inequality_pers_chris_pers_jacob, axiom, pers_chris != pers_jacob).
 tff(inequality_pers_chris_pers_kate, axiom, pers_chris != pers_kate).
+tff(inequality_pers_chris_pers_luca, axiom, pers_chris != pers_luca).
 tff(inequality_pers_jacob_pers_kate, axiom, pers_jacob != pers_kate).
+tff(inequality_pers_jacob_pers_luca, axiom, pers_jacob != pers_luca).
+tff(inequality_pers_kate_pers_luca, axiom, pers_kate != pers_luca).
 
 tff(inequality_sh_alice_sh_ben, axiom, sh_alice != sh_ben).
 tff(inequality_sh_alice_sh_chris, axiom, sh_alice != sh_chris).
@@ -39,12 +46,17 @@ tff(inequality_dir_jacob_dir_kate, axiom, dir_jacob != dir_kate).
 tff(inequality_dir_jacob_dir_chris, axiom, dir_jacob != dir_chris).
 tff(inequality_dir_jacob_liq_jacob, axiom, dir_jacob != liq_jacob).
 tff(inequality_dir_jacob_liq_kate, axiom, dir_jacob != liq_kate).
+tff(inequality_dir_jacob_liq_luca, axiom, dir_jacob != liq_luca).
 tff(inequality_dir_kate_dir_chris, axiom, dir_kate != dir_chris).
 tff(inequality_dir_kate_liq_jacob, axiom, dir_kate != liq_jacob).
 tff(inequality_dir_kate_liq_kate, axiom, dir_kate != liq_kate).
+tff(inequality_dir_kate_liq_luca, axiom, dir_kate != liq_luca).
 tff(inequality_dir_chris_liq_jacob, axiom, dir_chris != liq_jacob).
 tff(inequality_dir_chris_liq_kate, axiom, dir_chris != liq_kate).
+tff(inequality_dir_chris_liq_luca, axiom, dir_chris != liq_luca).
 tff(inequality_liq_jacob_liq_kate, axiom, liq_jacob != liq_kate).
+tff(inequality_liq_jacob_liq_luca, axiom, liq_jacob != liq_luca).
+tff(inequality_liq_kate_liq_luca, axiom, liq_kate != liq_luca).
 
 tff(relation_application_resolution, axiom,
   ! [Application: application, Resolution: resolution] :
@@ -103,6 +115,16 @@ tff(relation_application_assurance, axiom,
     <=>
     (
       Application = app1 & Assurance = ass1
+    )
+  )
+).
+tff(fact_company_AoA_liquidatorlist, axiom,
+  ! [Company: company, Liquidatorlist: liquidatorlist] :
+  (
+    company_AoA_liquidatorlist(Company, Liquidatorlist)
+    <=>
+    (
+      $false
     )
   )
 ).
