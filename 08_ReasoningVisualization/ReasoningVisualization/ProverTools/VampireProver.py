@@ -12,7 +12,12 @@ class VampireProver(IProverTool):
 
     def execute(self, program_file_path: str) -> ProverResult:
         path, file_name = os.path.split(program_file_path)
-        output = self._exec_and_get_output(file_name, path)
+        retry_cnt = 0
+        while True:
+            output = self._exec_and_get_output(file_name, path)
+            retry_cnt += 1
+            if retry_cnt > 2 or not self._is_sigfpe_error(output):
+                break
         result = self._parse_output(output)
         return result
 
@@ -29,6 +34,9 @@ class VampireProver(IProverTool):
         output = out.decode('utf-8')
         error = err.decode('utf-8')
         return error if output == '' else output
+
+    def _is_sigfpe_error(self, output):
+        return "Aborted by signal SIGFPE on " in output
 
     def _parse_output(self, output_text):
         output_lines = output_text.splitlines()

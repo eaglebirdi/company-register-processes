@@ -93,5 +93,5 @@ class ConjectureGenerator:
             var_name_prev = var_name
 
         predicates.append(rule_operand.predicate_name + "(" + first_variable + ")")
-        result = "? [" + ", ".join(variables) + "]: (" + " & ".join(predicates) + ")"
+        result = "? [" + ", ".join(variables) + "] : (" + " & ".join(predicates) + ")"
         return result
