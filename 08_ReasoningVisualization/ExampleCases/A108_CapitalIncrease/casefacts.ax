@@ -296,4 +296,3 @@ tff(fact_is_declaration_notarized, axiom,
     ((Declaration = dcl_alice) | (Declaration = dcl_dana))
   )
 ).
-
