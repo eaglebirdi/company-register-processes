@@ -70,13 +70,5 @@ def main():
             args.single_file_axioms)
 
 
-'''
-Exemplary command line arguments:
---process A96 --prover cvc5 --reassert_predicate_completion ./ExampleCases/A96_DirectorAppointment/example.json
---process A96 --prover vampire --precompute_arithmetics ./ExampleCases/A96_DirectorAppointment/example.json
---process A108 --prover cvc5 --reassert_predicate_completion ./ExampleCases/A108_CapitalIncrease/example.json
---process A115 --prover cvc5 --reassert_predicate_completion ./ExampleCases/A115_CompanyDissolution/example.json
-'''
-
 if __name__ == '__main__':
     main()
